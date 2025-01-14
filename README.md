@@ -38,6 +38,9 @@ sequenceDiagram
 ```
 
 ### Key features
+- Secure login over HTTPS
+- Validates Spotify login
+- Querys spotify for user data upon succesful login
 
 
 ### Technologies
