@@ -51,7 +51,7 @@ I am going to use the required technologies in the following ways.
 - login
 - Spotify api integration
 - process score with algorithm
-- **DB/Login** - 
+- **DB/Login** - stores each score with the corresponding username to perpetuate accurate percentile calculation for each new user. Stores username only with succesful login.
 - **WebSocket** - 
 
 ## 🚀 AWS deliverable
