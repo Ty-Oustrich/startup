@@ -1,12 +1,6 @@
-# Your startup name here
-# potential name "how basic is your music"
-[My Notes](notes.md)
+# How basic is your music taste?
 
-
-Would you come here and spin with me?
-Heat waves been faking me out.
-
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+How basic is your music taste is a website that connects with the spotify API to determine how plain someones listening experience is. Someone who listens only to popular artists like Drake, Taylor Swift, Bad Bunny,may be described as basic. If you listen only to deep cuts, music that is less popular or from obscure artitst you are less basic.
 
 
 > [!NOTE]
@@ -17,8 +11,6 @@ A brief description of the application here. Lorem ipsum dolor sit amet, consect
 
 ## 🚀 Specification Deliverable
 
-> [!NOTE]
->  Fill in this sections as the submission artifact for this deliverable. You can refer to this [example](https://github.com/webprogramming260/startup-example/blob/main/README.md) for inspiration.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
@@ -30,7 +22,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 
 ### Design
 
@@ -47,20 +39,20 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Two HTML pages, one for login, the other for displaying score and percentile
+- **CSS** - Displays a clean ui, including use of the spotify logo and colors. Large text box to emphasize the score and percentile.
+- **React** - processes Login, api query, score and percentile display.
+- **Web service** - Backend service for:
+- login
+- Spotify api integration
+- process score with algorithm
+- **DB/Login** - 
+- **WebSocket** - 
 
 ## 🚀 AWS deliverable
 
