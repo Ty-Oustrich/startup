@@ -6,6 +6,8 @@ my actual notes
 #####
 [My startup - Simon](https://simon.cs260.click)
 
+Ive been dying to catch you dizzy
+
 ## Helpful links
 
 - [Course instruction](https://github.com/webprogramming260)
