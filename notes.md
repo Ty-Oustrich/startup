@@ -1,5 +1,9 @@
 # CS 260 Notes
-
+#####
+#####
+my actual notes
+#####
+#####
 [My startup - Simon](https://simon.cs260.click)
 
 ## Helpful links
