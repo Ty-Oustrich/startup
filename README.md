@@ -41,6 +41,8 @@ sequenceDiagram
 - Secure login over HTTPS
 - Validates Spotify login
 - Querys spotify for user data upon succesful login
+- displays a score for every user based on their data
+- all results are stored, a percentile will display how your score compares to all others who have used the website.
 
 
 ### Technologies
