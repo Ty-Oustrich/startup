@@ -23,6 +23,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 ### Elevator pitch
 
 
+Do you listen to the same music as everyone else? With the "How basic is your music?" platform you can connect your spotify account and find out how unique you are. You will get a score that tells you if you are a part of the underground scene enjoying deep cuts or obscure songs, or if your only enjoying mainstream sounds. You will get a pulse on your music profile and be able to share it with your friends. What type of listener are you? Who in your friend group is the most basic?
+
+
 
 ### Design
 
