@@ -53,7 +53,7 @@ sequenceDiagram
 I am going to use the required technologies in the following ways.
 
 - **HTML** - Two HTML pages, one for login, the other for displaying score and percentile
-- **CSS** - Displays a clean ui, including use of the spotify logo and colors. Large text box to emphasize the score and percentile.
+- **CSS** - Displays a clean ui, including use of the spotify logo and colors. Large text box to emphasize the score and percentile. Loading bar built in css.
 - **React** - processes Login, api query, score and percentile display.
 - **Web service** - Backend service for:
 - login
