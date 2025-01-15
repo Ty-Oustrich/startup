@@ -28,12 +28,6 @@ Do you listen to the same music as everyone else? With "How basic is your music?
 ![Design image](design2.png)
 
 
-```mermaid
-sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
-```
 
 ### Key features
 - Secure login over HTTPS
