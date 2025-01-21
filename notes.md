@@ -12,6 +12,12 @@ to bring down from github- fetch->status and then pull.
 ssh -i ~/Desktop/WEBSITEKEY/production.pem ubuntu@18.206.64.130
 18.206.64.130
 
+Layer |	Example |	Purpose
+Application |	HTTPS	  |Functionality like web browsing
+Transport	| TCP	      | Moving connection information packets
+Internet	| IP	       | Establishing connections
+Link	  | Fiber, hardware	| Physical connections
+
 
 
 ## Helpful links
