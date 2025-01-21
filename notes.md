@@ -9,9 +9,8 @@ to bring down from github- fetch->status and then pull.
 -mermaid has diagrams I can create the work in .md files
 
 ## AWS delivarable
--ssh command
-  ssh -i ~/Desktop/WEBSITEKEY/production.pem ubuntu@18.206.64.130
-- 18.206.64.130
+ssh -i ~/Desktop/WEBSITEKEY/production.pem ubuntu@18.206.64.130
+18.206.64.130
 
 
 
