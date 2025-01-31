@@ -17,6 +17,7 @@ Transport	| TCP	      | Moving connection information packets
 Internet	| IP	       | Establishing connections
 Link	  | Fiber, hardware	| Physical connections
 
+I used Caddy to get HTTPS. Caddy makes secure connectin easy.
 
 
 ## Helpful links
