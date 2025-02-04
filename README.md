@@ -41,7 +41,7 @@ Do you listen to the same music as everyone else? With "How basic is your music?
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Two HTML pages, one for login, the other for displaying score and percentile
+- **HTML** - Three HTML pages, login, starting page, leaderboard where percentile for your score will be displayed.
 - **CSS** - Displays a clean ui, including use of the spotify logo and colors. Large text box to emphasize the score and percentile. Loading bar built in css.
 - **React** - processes Login, api query, score and percentile display.
 - **Web service** - Backend service for:
