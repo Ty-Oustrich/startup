@@ -25,9 +25,16 @@
     </header>
     <main>
             <form action="https://accounts.spotify.com/authorize" method=""get>
-                <!--Add my actual clientID and secret-->>
+                <!--replace with my actual clientID and secret-->>
                 <input type="hidden" name="client_id" value="">
-
+                <!--redirect url-->
+                <input type="hidden" name="redirect_uri" value="https://yourwebsite.com/callback">
+                <!--access level i need from user-->
+                <input type="hidden" name="scope" value="user-library-read user-read-email">
+                <input type="hidden" name="response_type" value="code">
+                <!--INCOMPLETE! :make sure I can handle csfr attacks-->
+                <input type="hidden" name="state" value="RANDOM_STATE_STRING">
+                <button type="submit" class="login-button">Log in with Spotify</button>
             </form>
 
     </main>
