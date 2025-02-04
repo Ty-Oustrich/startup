@@ -61,13 +61,13 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - Added index.html, explain-start.html, and leaderboard.html pages
+- [x] **Proper HTML element usage** - Used all required html elements, including BODY, NAV, MAIN, HEADER, FOOTER
+- [x] **Links** - I added links between all pages.
+- [x] **Text** - Added explaination of the website, what it does.
+- [x] **3rd party API placeholder** - Spotify api integration for login, I added a placeholder button and some started code.
 - [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
+- [x] **Login placeholder** - Login placeholder button, "log in with spotify"
 - [ ] **DB data placeholder** - I did not complete this part of the deliverable.
 - [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
 
