@@ -68,7 +68,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **3rd party API placeholder** - Spotify api integration for login, I added a placeholder button and some started code.
 - [ ] **Images** - I did not complete this part of the deliverable.
 - [x] **Login placeholder** - Login placeholder button, "log in with spotify"
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
+- [x] **DB data placeholder** - in Leaderboard.html the list is where the placeholder for the database data will be displayed
 - [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
 
 ## 🚀 CSS deliverable
