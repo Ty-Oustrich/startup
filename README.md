@@ -69,7 +69,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [ ] **Images** - I did not complete this part of the deliverable.
 - [x] **Login placeholder** - Login placeholder button, "log in with spotify"
 - [x] **DB data placeholder** - in Leaderboard.html the list is where the placeholder for the database data will be displayed
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **WebSocket placeholder** - added websocket placeholders for loading bar, score, and classification of taste. In explain-start.html And for the leaderboard in Leaderboard.html
 
 ## 🚀 CSS deliverable
 
