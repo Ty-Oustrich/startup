@@ -61,12 +61,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **HTML pages** - Added index.html, explain-start.html, and leaderboard.html pages
-- [x] **Proper HTML element usage** - Used all required html elements, including BODY, NAV, MAIN, HEADER, FOOTER
-- [x] **Links** - I added links between all pages.
-- [x] **Text** - Added explaination of the website, what it does.
+- [x] **HTML pages** - Added index.html, explain-start.html, leaderboard.html and about.html pages
+- [x] **Proper HTML element usage** - Used all required html elements, including BODY, NAV, MAIN, HEADER, FOOTER in each page
+- [x] **Links** - I added links between all pages vie nav tag.
+- [x] **Text** - Added textual explaination of the website, what it does. to index.html. And a placeholder in about.html for further explaination. 
 - [x] **3rd party API placeholder** - Spotify api integration for login, I added a placeholder button and some started code.
-- [x] **Images** - Added image placeholders to all three html files in the heaeder tag
+- [x] **Images** - Added image placeholders to all four html files in the header tag
 - [x] **Login placeholder** - Login placeholder button, "log in with spotify"
 - [x] **DB data placeholder** - in Leaderboard.html the list is where the placeholder for the database data will be displayed
 - [x] **WebSocket placeholder** - added websocket placeholders for loading bar, score, and classification of taste. In explain-start.html And for the leaderboard in Leaderboard.html
