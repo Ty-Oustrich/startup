@@ -1,0 +1,21 @@
+{
+  "name": "cs260",
+  "version": "1.0.0",
+  "description": "How basic is your music taste is a website that connects with the spotify API to determine how plain someones listening experience is. Someone who listens only to popular artists like Drake, Taylor Swift, Bad Bunny,may be described as basic. If you listen only to deep cuts, music that is less popular or from obscure artitst you are less basic.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ty-Oustrich/startup.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ty-Oustrich/startup/issues"
+  },
+  "homepage": "https://github.com/Ty-Oustrich/startup#readme"
+}
