@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Ty-Oustrich/startup/issues"
   },
-  "homepage": "https://github.com/Ty-Oustrich/startup#readme"
+  "homepage": "https://github.com/Ty-Oustrich/startup#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
 }
