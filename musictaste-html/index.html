@@ -47,25 +47,16 @@
                 });
                 function getTokenFromUrl() {
                     const hash = window.location.hash;
-
-                    
+                    if (hash) {
+                        const token = hash.split('&')[0].split('=')[1];
+                        console.log('Access Token:', token);
+                    }
                 }
+                window.onload = getTokenFromUrl;
             </script>
 
 
 
-            <form action="https://accounts.spotify.com/authorize" method=""get>
-                <!--replace with my actual clientID-->>
-                <input type="hidden" name="client_id" value="640a1bf34e8349a2b748b0e6c68dbec5">
-                <!--redirect url-->
-                <input type="hidden" name="redirect_uri" value="https://startup.musictaste.click/explain-start.html">
-                <!--access level i need from user-->
-                <input type="hidden" name="scope" value="user-library-read user-read-email">
-                <input type="hidden" name="response_type" value="code">
-                <!--INCOMPLETE! :make sure I can handle csfr attacks-->
-                <input type="hidden" name="state" value="RANDOM_STATE_STRING">
-                <button type="submit" class="login-button">Log in with Spotify</button>
-            </form>
 
     </main>
     <footer>
