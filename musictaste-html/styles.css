@@ -6,4 +6,11 @@
 body{
     font-family: Arial, sans-serif;
     background-color: #ebedfc;
+
+}
+header {
+    background-color: #1b212e;
+    color: white;
+    padding: 20px;
+    text-align: center;
 }
