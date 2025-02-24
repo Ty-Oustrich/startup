@@ -44,11 +44,29 @@ main{
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-main button{
-    justify-content: center;
     display:flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    }
+#login-btn{
+    background-color: #1db954;
+    color:white;
+    padding: 12px 25px;
+    border:none;
+    border-radius: 25px;
+    font-size:1.3em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
 }
+#login-btn:hover{
+    background-color: #1ed760;
+
+}
+
+
+
 main h2{
     font-size: 1.8em;
     color: #1a1a2a;
