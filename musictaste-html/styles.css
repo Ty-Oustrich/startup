@@ -67,7 +67,6 @@ main{
 }
 
 
-
 main h2{
     font-size: 1.8em;
     color: #1a1a2a;
@@ -79,21 +78,8 @@ main p{
     margin-bottom: 20px;
 }
 
-#login-btn{
-    background-color: #1db953;
-    color: white;
-    padding: 12px 25px;
-    border:none;
-    border-radius: 25px;
-    font-size: 1.3em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-#login-btn:hover{
-    background-color: #1ed760;
-}
 #analyze-btn{
-    background-color: #1db953;
+    background-color: #57e1e6;
     color: white;
     padding: 12px 25px;
     border:none;
@@ -101,6 +87,8 @@ main p{
     font-size: 1.3em;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 #analyze-btn:hover{
     background-color: #1ed760;
