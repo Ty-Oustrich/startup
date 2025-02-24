@@ -60,12 +60,23 @@ main p{
     transition: background-color 0.3s;
 }
 #login-btn:hover{
-
+    background-color: #1ed760;
 }
 footer{
+    text-align: center;
+    padding:20px;
+    background-color: #1a1a2e;
+    color:white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
 
 }
 footer a{
+    color: #1db953;
+    text-decoration: none;
+    font-weight: bold;
     
 }
 footer a:hover{
