@@ -32,13 +32,22 @@ nav menu li a{
     transition: background-color 0.3s;
 }
 main{
-
+    max-width: 800px;
+    margin: 40px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 main h2{
+    font-size: 1.8em;
+    color: #1a1a2a;
+    margin-bottom: 15px;
 
 }
 main p{
-
+    font-size: 1.2em;
+    margin-bottom: 20px;
 }
 #login-btn{
 
