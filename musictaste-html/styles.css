@@ -9,8 +9,8 @@ body{
 
 }
 header {
-    background-color: #1b212e;
-    color: white;
+    background-color: #f5fafc;
+    color: black;
     padding: 20px;
     text-align: center;
 }
@@ -32,7 +32,7 @@ nav menu{
 /*any anchor inside of a link*/
 
 nav menu li a{
-    color: #fff;
+    color: black;
     font-weight: bold;
     padding: 10px 15px;
     transition: background-color 0.3s;
@@ -52,7 +52,7 @@ main{
 #login-btn{
     background-color: #1db954;
     color:white;
-    padding: 25px 25px;
+    padding: 20px 25px;
     border:none;
     border-radius: 25px;
     font-size:1.3em;
@@ -79,9 +79,9 @@ main p{
 }
 
 #analyze-btn{
-    background-color: #57e1e6;
+    background-color: #4dcbff;
     color: white;
-    padding: 12px 25px;
+    padding: 20px 25px;
     border:none;
     border-radius: 25px;
     font-size: 1.3em;
