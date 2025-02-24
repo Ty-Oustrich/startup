@@ -80,5 +80,5 @@ footer a{
     
 }
 footer a:hover{
-    
+    text-decorator: underline;
 }
