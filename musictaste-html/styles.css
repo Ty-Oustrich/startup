@@ -52,13 +52,14 @@ main{
 #login-btn{
     background-color: #1db954;
     color:white;
-    padding: 12px 25px;
+    padding: 25px 25px;
     border:none;
     border-radius: 25px;
     font-size:1.3em;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 #login-btn:hover{
     background-color: #1ed760;
