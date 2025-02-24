@@ -26,7 +26,10 @@ nav menu{
 }
 /*any anchor inside of a link*/
 nav menu li a{
-
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
 }
 main{
 
