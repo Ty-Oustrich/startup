@@ -5,10 +5,13 @@
 }
 body{
     font-family: Arial, sans-serif;
-    background-color: #46475e;
     padding-bottom: 80px;
 }
-header {
+
+header img{
+    margin:10px auto;
+}
+/* header {
     background-color: #f5fafc;
     color: black;
     padding: 20px;
@@ -29,7 +32,7 @@ nav menu{
     justify-content: center;
     gap: 20px;
 }
-/*any anchor inside of a link*/
+--any anchor inside of a link
 
 nav menu li a{
     color: black;
@@ -50,22 +53,16 @@ main{
     align-items: center;
     text-align: center;
     
-    }
+    } */
 #login-btn{
     background-color: #1db954;
-    color:white;
-    padding: 20px 25px;
     border:none;
-    border-radius: 25px;
-    font-size:1.3em;
-    cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 #login-btn:hover{
     background-color: #1ed760;
 }
+/* 
 main h2{
     font-size: 1.8em;
     color: #1a1a2a;
@@ -98,12 +95,12 @@ footer{
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-footer a{
+} */
+/* footer a{
     color: #1db953;
     text-decoration: none;
     font-weight: bold;    
-}
+} */
 footer a:hover{
     text-decoration: underline;
 }
