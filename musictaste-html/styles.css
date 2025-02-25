@@ -72,17 +72,11 @@ main p{
     font-size: 1.2em;
     margin-bottom: 40px;
 }
+    */
 #analyze-btn{
     background-color: #4dcbff;
-    color: white;
-    padding: 20px 25px;
     border:none;
-    border-radius: 25px;
-    font-size: 1.3em;
-    cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 #analyze-btn:hover{
     background-color: #57e9ff;
@@ -95,7 +89,8 @@ footer{
     position: fixed;
     bottom: 0;
     width: 100%;
-} */
+} 
+*/
 /* footer a{
     color: #1db953;
     text-decoration: none;

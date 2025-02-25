@@ -11,34 +11,29 @@
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-    <header>
-        <h1>Music taste analyzer for Spotify</h1>
-        <img src="musictaste.png" alt="musictaste.click logo" width="300">
-
-        <nav>
-            <menu>
-                <li><a href="index.html">Login</a></li>
-                <li><a href="explain-start.html">Analyze</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="about.html">About</a></li>
-            </menu>
+<body class="bg-dark text-light"> <!-- Added bg-dark text-light for dark theme -->
+    <header class="bg-dark text-light py-4 text-center"> <!-- Added Bootstrap classes -->
+        <h1 class="display-4">Music taste analyzer for Spotify</h1> <!-- Added display-4 for larger title -->
+        <img src="musictaste.png" alt="musictaste.click logo" class="img-fluid rounded" style="max-width: 300px;"> <!-- Replaced width with Bootstrap classes -->
+        <nav class="navbar navbar-expand navbar-dark"> <!-- Converted to Bootstrap navbar -->
+            <ul class="navbar-nav mx-auto gap-3"> <!-- Replaced <menu> with navbar-nav -->
+                <li class="nav-item"><a href="index.html" class="nav-link fs-3 fw-bold text-light">Login</a></li>
+                <li class="nav-item"><a href="explain-start.html" class="nav-link fs-3 fw-bold text-light">Analyze</a></li>
+                <li class="nav-item"><a href="leaderboard.html" class="nav-link fs-3 fw-bold text-light">Leaderboard</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link fs-3 fw-bold text-light">About</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main>
-       
-            <button id="analyze-btn">Analyze my music</button> 
-        
-            <!-- Websocket placeholder: analysis status -->
-            <h2 id="status">Waiting for analysis...</h2>
-
-            <!-- Websocket placeholder: score -->
-            <h2>Your Score: <span id="score">---</span></h2>
-
-            <!-- Websocket placeholder: taste classification -->
-            <p>Your music taste is: <span id="taste">basic/unique</span></p>
-        
-
+    <main class="container my-5">
+        <div class="row justify-content-center"> 
+            <div class="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+                <button id="analyze-btn" class="btn btn-info btn-lg mb-4">Analyze my music</button>
+                <h2 id="status" class="h3">Waiting for analysis...</h2>
+                <h2 class="h3">Your Score: <span id="score">---</span></h2> 
+                <p class="lead">Your music taste is: <span id="taste">basic/unique</span></p> 
+            </div>
+        </div>
     </main>
     <footer>
         <h5>Creator: Tyler Oustrich</h5>
