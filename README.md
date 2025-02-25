@@ -75,12 +75,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Header, footer, and main content body** - 
-- [x] **Navigation elements** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - Header includes a title and image for each page. The header also contains the nav bar
+- [x] **Navigation elements** - I made a simple navigation bar that navigates to my 4 html pages. Login, analyze, leaderboard, about.
 - [x] **Responsive to window resizing** - The bootsrap framework makes this easy. i ncluded the javascript responsiveness bundle at the end of each body tag on all pages. My meta tag makes sure mobile renders at 1:1. I used the boostrap grid system. My imgage uses img-fluid which makes it scale. The large text at the top gets smaller to fit a small window. All elements stay centered with resizing.
 Bootstrap uses flexboxes heavily.
-- [x] **Application elements** - I did not complete this part of the deliverable.
-- [x] **Application text content** - I did not complete this part of the deliverable.
+- [x] **Application elements** - I made a nice looking login button for spotify, and also an analyze button. I made a spot for the leaderboard to go
+- [x] **Application text content** - I made a simple description of the algorithm in the about tab, this is what my app will use to determine someones music taste.
 - [x] **Application images** - I added my musictaste image to each page, centered, as well as the favicon.
 
 ## 🚀 React part 1: Routing deliverable
