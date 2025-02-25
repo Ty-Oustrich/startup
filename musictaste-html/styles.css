@@ -34,6 +34,7 @@ nav menu{
 nav menu li a{
     color: black;
     font-weight: bold;
+    font-size: 35px;
     padding: 10px 15px;
     transition: background-color 0.3s;
 }
