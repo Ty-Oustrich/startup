@@ -28,12 +28,14 @@
     </header>
 
     <main class="container my-5">
-        <button id="login-btn">Login with Spotify</button>
-        <h2>Analyze your music taste<h2>
-            <h2>Compare with others</h2>
-        <p>
+        <div class="row justify-content-center">
+        <div class="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+
+            <button id="login-btn" class="btn btn-success btn-lg mb-4">Login with Spotify</button>        <h2>Analyze your music taste<h2>
+                <h2 class="h3">Analyze your music taste</h2>
+                <h2 class="h3">Compare with others</h2>
+        <p class ="lead">
             An algorithm will determine how basic your music taste is based on the popularity of the songs you listen to.
-            
             To get started, click the button above to log in with your Spotify account.
         </p>
 
@@ -41,33 +43,35 @@
         
 
 
-            <script>
-                clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
-                redirectUrl = 'https://startup.musictaste.click/explain-start.html';
-                scopes = 'user-read-private user-read-email'
-                document.getElementById('login-btn').addEventListener('click', () => {
-                const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
-                window.location = authUrl;
-                });
-                function getTokenFromUrl() {
-                    const hash = window.location.hash;
-                    if (hash) {
-                        const token = hash.split('&')[0].split('=')[1];
-                        console.log('Access Token:', token);
-                    }
-                }
-                window.onload = getTokenFromUrl;
-            </script>
 
 
 
 
+        </div>
+        </div>
     </main>
-    <footer>
-        <h3>Creator: Tyler Oustrich</h3>
-        <a href="https://github.com/Ty-Oustrich?tab=repositories" target="_blank">Github</a>
-        
+    <footer class="bg-dark text-light text-center py-3 fixed-bottom">
+        <h3 class="h5">Creator: Tyler Oustrich</h3>
+        <a href="https://github.com/Ty-Oustrich?tab=repositories" target="_blank" class="text-success fw-bold">Github</a>
     </footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script>
+        clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
+        redirectUrl = 'https://startup.musictaste.click/explain-start.html';
+        scopes = 'user-read-private user-read-email'
+        document.getElementById('login-btn').addEventListener('click', () => {
+        const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
+        window.location = authUrl;
+        });
+        function getTokenFromUrl() {
+            const hash = window.location.hash;
+            if (hash) {
+                const token = hash.split('&')[0].split('=')[1];
+                console.log('Access Token:', token);
+            }
+        }
+        window.onload = getTokenFromUrl;
+    </script>
 </body>
 </html>
