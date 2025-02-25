@@ -6,7 +6,7 @@
 body{
     font-family: Arial, sans-serif;
     background-color: #46475e;
-
+    padding-bottom: 80;
 }
 header {
     background-color: #f5fafc;
@@ -63,21 +63,16 @@ main{
 }
 #login-btn:hover{
     background-color: #1ed760;
-
 }
-
-
 main h2{
     font-size: 1.8em;
     color: #1a1a2a;
     margin-bottom: 10px;
-
 }
 main p{
     font-size: 1.2em;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
-
 #analyze-btn{
     background-color: #4dcbff;
     color: white;
@@ -101,14 +96,11 @@ footer{
     position: fixed;
     bottom: 0;
     width: 100%;
-
-
 }
 footer a{
     color: #1db953;
     text-decoration: none;
-    font-weight: bold;
-    
+    font-weight: bold;    
 }
 footer a:hover{
     text-decoration: underline;
