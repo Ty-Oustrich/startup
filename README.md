@@ -42,7 +42,7 @@ Do you listen to the same music as everyone else? With "How basic is your music?
 I am going to use the required technologies in the following ways.
 
 - **HTML** - Three HTML pages, login, starting page, leaderboard where percentile for your score will be displayed.
-- **CSS** - Displays a clean ui, including use of the spotify logo and colors. Large text box to emphasize the score and percentile. Loading bar built in css.
+- **CSS** - Displays a clean ui, including use of my logo and colors. Large text box to emphasize the score and percentile.
 - **React** - processes Login, api query, score and percentile display.
 - **Web service** - Backend service for:
 - login
@@ -75,12 +75,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - I did not complete this part of the deliverable.
+- [x] **Navigation elements** - I did not complete this part of the deliverable.
+- [x] **Responsive to window resizing** - The bootsrap framework makes this easy. i ncluded the javascript responsiveness bundle at the end of each body tag on all pages. My meta tag makes sure mobile renders at 1:1. I used the boostrap grid system. My imgage uses img-fluid which makes it scale. The large text at the top gets smaller to fit a small window. All elements stay centered with resizing.
+- [x] **Application elements** - I did not complete this part of the deliverable.
+- [x] **Application text content** - I did not complete this part of the deliverable.
+- [x] **Application images** - I added my musictaste image to each page, centered, as well as the favicon.
 
 ## 🚀 React part 1: Routing deliverable
 
