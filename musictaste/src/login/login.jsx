@@ -7,6 +7,7 @@ export function Login(){
     const redirectUri = 'https://startup.musictaste.click/explain-start.html';
     const scopes = 'user-read-private user-read-email user-top-read'
     //login button click
+    const [userName, setUserName] = useState('');
     const handleSpotifyLogin = () => {
         const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
         window.location = authUrl;
