@@ -4,13 +4,18 @@ import './app.css'
 
 export function Login(){
     clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
-    redirectUrl = 'https://startup.musictaste.click/explain-start.html';
+    redirectUri = 'https://startup.musictaste.click/explain-start.html';
     scopes = 'user-read-private user-read-email user-top-read'
     //login button click
     const handleSpotifyLogin = () => {
         const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
         window.location = authUrl;
     }
+
+    /*checks the URL hash for a Spotify
+     access token (after redirect), 
+     extracts it, logs it, stores it in 
+     localStorage, then clears the hash.*/ 
     useEffect(() => {
         const getTokenFromUrl = () => {
           const hash = window.location.hash;
@@ -25,6 +30,10 @@ export function Login(){
         };
         getTokenFromUrl();
       }, []);
+
+
+      
+
 
 
 }
