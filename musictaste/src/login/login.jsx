@@ -57,9 +57,29 @@ export function Login(){
           </li>
         </ul>
       </nav>
-          </header>
-          </div>
-      );
+            </header>
+            <main className="container my-5">
+            <div className="row justify-content-center">
+        <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+          <button
+            id="login-btn"
+            className="btn btn-success btn-lg mb-4"
+            onClick={handleSpotifyLogin}
+          >Login with Spotify
+          </button>
+          {userName && <p className="lead">Welcome, {userName}!</p>}
+          <h2 className="h3">Analyze your music taste</h2>
+          <h2 className="h3">Compare with others</h2>
+          <p className="lead">
+            An algorithm will determine how basic your music taste is based on the popularity of the songs you listen to.
+            To get started, click the button above to log in with your Spotify account.
+          </p>
+        </div>
+      </div>
+
+            </main>
+            </div>
+        );
 
 
 
