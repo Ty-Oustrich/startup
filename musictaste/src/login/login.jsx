@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap styles
 import './app.css'
 
 export function Login(){
-    clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
-    redirectUri = 'https://startup.musictaste.click/explain-start.html';
-    scopes = 'user-read-private user-read-email user-top-read'
+    const clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
+    const redirectUri = 'https://startup.musictaste.click/explain-start.html';
+    const scopes = 'user-read-private user-read-email user-top-read'
     //login button click
     const handleSpotifyLogin = () => {
         const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
@@ -31,8 +31,10 @@ export function Login(){
         getTokenFromUrl();
       }, []);
 
+      return(
 
-      
+      );
+
 
 
 
