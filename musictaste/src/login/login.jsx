@@ -41,6 +41,22 @@ export function Login(){
             className="img-fluid rounded"
             style={{ maxWidth: '300px' }}
           />
+          <nav className="navbar navbar-expand navbar-dark">
+        <ul className="navbar-nav mx-auto gap-3">
+          <li className="nav-item">
+            <a href="/login" className="nav-link fs-3 fw-bold text-light">Login</a>
+          </li>
+          <li className="nav-item">
+            <a href="/analyze" className="nav-link fs-3 fw-bold text-light">Analyze</a>
+          </li>
+          <li className="nav-item">
+            <a href="/leaderboard" className="nav-link fs-3 fw-bold text-light">Leaderboard</a>
+          </li>
+          <li className="nav-item">
+            <a href="/about" className="nav-link fs-3 fw-bold text-light">About</a>
+          </li>
+        </ul>
+      </nav>
           </header>
           </div>
       );
