@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap styles
 import './app.css'
 
@@ -9,6 +9,7 @@ export function Login(){
     //login button click
     const [userName, setUserName] = useState('');
     const handleSpotifyLogin = () => {
+        //is authUrl endpoint proper????????
         const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
         window.location = authUrl;
     }
