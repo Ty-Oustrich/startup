@@ -3,6 +3,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 export function Leaderboard(){
+    const [leaderboardData, setLeaderboardData] = useState(['Loading...']);
+  // Placeholder for leaderboard data (from WebSocket/API)
+  useEffect(() => {
+    // Replace with actual data fetching logic
+    // remove when done... setTimeout to simulate data loading
+    setTimeout(() => {
+      setLeaderboardData(['User1: 95%', 'User2: 90%', 'User3: 85%']); // Example data
+    }, 2000); // Simulate 2 seconds loading
+  }, []);
+    
 
 
 
@@ -34,7 +44,7 @@ export function Leaderboard(){
       </nav>
             </header>
 
-        
+
 
 
         <footer className="bg-light text-dark text-center py-3 fixed-bottom">
