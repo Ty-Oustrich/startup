@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 //remove dash from name
-export function explain-start(){
+export function explainStart(){
 
 
 
