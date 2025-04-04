@@ -14,57 +14,7 @@
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-dark text-light"> 
-    <header class="bg-dark text-light py-4 text-center">
-        <h1 class="display-4">Is your music taste basic?</h1>
-        <img src="musictaste.png" alt="musictaste.click logo" class="img-fluid rounded" style="max-width: 300px;">
-        <nav class="navbar navbar-expand navbar-dark">
-            <ul class="navbar-nav mx-auto gap-3">                
-                <li class="nav-item"><a href="index.html" class="nav-link fs-3 fw-bold text-light">Login</a></li>
-                <li class="nav-item"><a href="explain-start.html" class="nav-link fs-3 fw-bold text-light">Analyze</a></li>
-                <li class="nav-item"><a href="leaderboard.html" class="nav-link fs-3 fw-bold text-light">Leaderboard</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link fs-3 fw-bold text-light">About</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="container my-5">
-        <div class="row justify-content-center">
-        <div class="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
-
-            <button id="login-btn" class="btn btn-success btn-lg mb-4">Login with Spotify</button>
-                <h2 class="h3">Analyze your music taste</h2>
-                <h2 class="h3">Compare with others</h2>
-        <p class ="lead">
-            An algorithm will determine how basic your music taste is based on the popularity of the songs you listen to.
-            To get started, click the button above to log in with your Spotify account.
-        </p>
-
-        <!--ADD A DISPLAY NAME AND TIE IT TO THE SPOTIFY LOGIN FOR DATA STORAGE-->
-        </div>
-        </div>
-    </main>
-    <footer class="bg-light text-dark text-center py-3 fixed-bottom">
-        <h3 class="h5">Creator: Tyler Oustrich</h3>
-        <a href="https://github.com/Ty-Oustrich?tab=repositories" target="_blank" class="text-success fw-bold">Github</a>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-        clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
-        redirectUrl = 'https://startup.musictaste.click/explain-start.html';
-        scopes = 'user-read-private user-read-email user-top-read'
-        document.getElementById('login-btn').addEventListener('click', () => {
-        const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
-        window.location = authUrl;
-        });
-        function getTokenFromUrl() {
-            const hash = window.location.hash;
-            if (hash) {
-                const token = hash.split('&')[0].split('=')[1];
-                console.log('Access Token:', token);
-            }
-        }
-        window.onload = getTokenFromUrl;
-    </script>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
 </body>
-</html>
