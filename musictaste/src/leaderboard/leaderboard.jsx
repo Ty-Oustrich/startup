@@ -14,16 +14,11 @@ export function Leaderboard(){
   }, []);
     
 
-
-
     return(
-      
-    
-        
           <div className="bg-dark text-light">
             <header className="bg-dark text-light py-4 text-center">
               <h1 className="display-4">Music taste analyzer for Spotify</h1>
-              <img src="musictaste.png" alt="musictaste.click logo" className="img-fluid rounded" style={{ maxWidth: '300px' }} />
+              <img src="/musictaste.png" alt="musictaste.click logo" className="img-fluid rounded" style={{ maxWidth: '300px' }} />
       
               <nav className="navbar navbar-expand navbar-dark">
                 <ul className="navbar-nav mx-auto gap-3">
