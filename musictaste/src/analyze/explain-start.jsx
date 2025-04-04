@@ -22,11 +22,12 @@ export function explainStart(){
     }
   };
 
-  function fetchSpotData(){
+  async function fetchSpotData(){
     //get data
     return [];
   }
-  function fetchChartData(){
+  
+  async function fetchChartData(){
     //the data to compare users listneing to
     return [];
   }
