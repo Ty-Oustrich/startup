@@ -35,7 +35,17 @@ export function About(){
             </header>
 
         
-
+            <main className="container my-5">
+        <div className="row justify-content-center">
+            <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+                <h2 className="h3">about</h2>
+                <p> Your top 50 songs are compared to the top 50 songs on the current charts. For every song in both lists a point is added, meaning, you are more basic.
+                    If your top genres are the most popular genres, points are added.
+                    
+                </p>
+            </div>
+        </div>
+    </main>
 
         <footer className="bg-light text-dark text-center py-3 fixed-bottom">
       <h3 className="h5">Creator: Tyler Oustrich</h3>
