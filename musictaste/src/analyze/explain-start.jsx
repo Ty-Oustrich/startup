@@ -30,13 +30,13 @@ export function explain-start(){
       </nav>
             </header>
 
-            <main class="container my-5">
-        <div class="row justify-content-center"> 
-            <div class="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+            <main className="container my-5">
+        <div className="row justify-content-center"> 
+            <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
                 <button id="analyze-btn" class="btn btn-info btn-lg mb-4">Analyze my music</button>
                 <h2 id="status" class="h3">Waiting for analysis...</h2>
-                <h2 class="h3">Your Score: <span id="score">---</span></h2> 
-                <p class="lead">Your music taste is: <span id="taste">basic/unique</span></p> 
+                <h2 className="h3">Your Score: <span id="score">---</span></h2> 
+                <p className="lead">Your music taste is: <span id="taste">basic/unique</span></p> 
             </div>
             </div>
           </main>
