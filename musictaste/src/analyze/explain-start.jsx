@@ -4,6 +4,10 @@ import './app.css';
 
 //remove dash from name
 export function explainStart(){
+    const [status, setStatus] = useState('Waiting for analysis...');
+    const [score, setScore] = useState('---');
+    const [taste, setTaste] = useState('0-100');
+    const [error, setError] = useState(null);
 
 
 
