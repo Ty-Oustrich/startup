@@ -6,7 +6,7 @@ import './app.css';
 export function explainStart(){
     const [status, setStatus] = useState('Waiting for analysis...');
     const [score, setScore] = useState('---');
-    const [taste, setTaste] = useState('0-100');
+    const [taste, setTaste] = useState('basic/unique');
     const [error, setError] = useState(null);
 
     const analyzeClick = async () => {
@@ -22,7 +22,24 @@ export function explainStart(){
     }
   };
 
+  function fetchSpotData(){
+    //get data
+    return [];
+  }
+  function fetchChartData(){
+    //the data to compare users listneing to
+    return [];
+  }
+
+  function calcScore(spotData, chartData){
+    //process score, return the score
+    return 0;
+  }
   
+  function determineTaste(calculatedScore) {
+    //basic/unique based on score
+    return 'basic/unique';
+  }
 
 
     return(
