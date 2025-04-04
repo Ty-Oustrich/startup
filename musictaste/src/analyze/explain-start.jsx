@@ -9,6 +9,20 @@ export function explainStart(){
     const [taste, setTaste] = useState('0-100');
     const [error, setError] = useState(null);
 
+    const analyzeClick = async () => {
+      setStatus('Analyzing...');
+      setError(null);
+    
+
+    try {
+        //fetch the data from spotify
+        //process it
+    } catch{
+      //catch errrors
+    }
+  };
+
+  
 
 
     return(
