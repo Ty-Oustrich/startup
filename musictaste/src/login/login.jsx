@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap styles
-import './app.css'
+import '../app.css'
 
 export function Login(){
     const clientId = '640a1bf34e8349a2b748b0e6c68dbec5';

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './app.css';
+import '../app.css';
 
 //remove dash from name
-export function explainStart(){
+export function Analyze(){
     const [status, setStatus] = useState('Waiting for analysis...');
     const [score, setScore] = useState('---');
     const [taste, setTaste] = useState('basic/unique');
