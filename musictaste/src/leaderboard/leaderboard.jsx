@@ -51,9 +51,10 @@ export function Leaderboard(){
                   <h2 className="h3">percentile placeholder</h2>
                   <h2 className="h3">Leaderboard</h2>
                   <ul id="Leaderboard" className="list-unstyled">
-                    {/* Websocket placeholder for live leaderboard updates. */}
-                    <li>Loading...</li>
-                  </ul>
+                  {leaderboardData.map((item, index) => ( //websocket placeholder?
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
                 </div>
               </div>
             </main>
