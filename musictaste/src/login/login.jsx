@@ -10,7 +10,7 @@ export function Login(){
     const [userName, setUserName] = useState('');
     const handleSpotifyLogin = () => {
         //is authUrl endpoint proper????????
-        const authUrl = "https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}"
+        const authUrl = `http://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
         window.location = authUrl;
     }
 
