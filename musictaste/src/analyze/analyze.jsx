@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../app.css';
 
@@ -48,30 +49,6 @@ export function Analyze(){
         <header className="bg-dark text-light py-4 text-center">
           <h1 className="display-4">Is your music taste basic?</h1>
           <img src="/musictaste.png" alt="musictaste.click logo" className="img-fluid rounded" style={{ maxWidth: '300px' }}/>
-          <nav className="navbar navbar-expand navbar-dark">
-        <ul className="navbar-nav mx-auto gap-3">
-        <li className="nav-item">
-              <NavLink to="/" className="nav-link fs-3 fw-bold text-light">
-                Login
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/analyze" className="nav-link fs-3 fw-bold text-light">
-                Analyze
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/leaderboard" className="nav-link fs-3 fw-bold text-light">
-                Leaderboard
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/about" className="nav-link fs-3 fw-bold text-light">
-                About
-              </NavLink>
-            </li>
-        </ul>
-      </nav>
             </header>
 
             <main className="container my-5">

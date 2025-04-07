@@ -13,33 +13,30 @@ import { About } from './about/about';
         <BrowserRouter>
       <div className="body bg-dark text-light">
         <header className="container-fluid">
-          <nav className="navbar fixed-top navbar-dark">
-            <div className="navbar-brand">
-              Simon<sup>&reg;</sup>
-            </div>
-            <menu className="navbar-nav">
-                <li className="nav-item">
-                <NavLink className="nav-link" to="">
-                    Login
-                </NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink className="nav-link" to="analyze">
-                    Analyze
-                </NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink className="nav-link" to="leaderboard">
-                    Leaderboard
-                </NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink className="nav-link" to="about">
-                    About
-                </NavLink>
-                </li>
-            </menu>
-          </nav>
+         <nav className="navbar navbar-expand navbar-dark">
+                 <ul className="navbar-nav mx-auto gap-3">
+                 <li className="nav-item">
+                       <NavLink to="/" className="nav-link fs-3 fw-bold text-light">
+                         Login
+                       </NavLink>
+                     </li>
+                     <li className="nav-item">
+                       <NavLink to="/analyze" className="nav-link fs-3 fw-bold text-light">
+                         Analyze
+                       </NavLink>
+                     </li>
+                     <li className="nav-item">
+                       <NavLink to="/leaderboard" className="nav-link fs-3 fw-bold text-light">
+                         Leaderboard
+                       </NavLink>
+                     </li>
+                     <li className="nav-item">
+                       <NavLink to="/about" className="nav-link fs-3 fw-bold text-light">
+                         About
+                       </NavLink>
+                     </li>
+                 </ul>
+               </nav>
         </header>
   
         <Routes>
@@ -69,4 +66,4 @@ import { About } from './about/about';
   }
 
 
-  export default app
+  export default App
