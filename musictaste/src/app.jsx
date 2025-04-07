@@ -8,7 +8,7 @@ import { Leaderboard } from './leaderboard/leaderboard';
 import { About } from './about/about';
 
 
-export default function App() {
+ function App() {
     return (
         <BrowserRouter>
       <div className="body bg-dark text-light">
@@ -69,4 +69,4 @@ export default function App() {
   }
 
 
-
+  export default app
