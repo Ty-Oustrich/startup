@@ -88,8 +88,9 @@ Bootstrap uses flexboxes heavily.
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] **Bundled using Vite** - I used vite
-- [x] **Components** - done
-- [x] **Router** - Routing between login and voting components.
+- [x] **Components** - Single page application, all pages have their funcitonality mapped out, just need to implement fully.(Login, analyze, leaderboard, about). React and bootstrap.
+I have already started on React part 2 so things might look messy.
+- [x] **Router** - Routing between all components
 
 ## 🚀 React part 2: Reactivity
 
