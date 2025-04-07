@@ -16,7 +16,7 @@ export function Leaderboard(){
     
 
     return(
-          <div className="bg-dark text-light">
+          <div className="bg-dark text-light min-vh-100">
 
             <main className="container my-5">
               <div className="row justify-content-center">
