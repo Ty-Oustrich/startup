@@ -46,10 +46,7 @@ export function Analyze(){
 
     return(
         <div className="bg-dark text-light min-vh-100">
-        <header className="bg-dark text-light py-4 text-center">
-          <h1 className="display-4">Is your music taste basic?</h1>
-          <img src="/musictaste.png" alt="musictaste.click logo" className="img-fluid rounded" style={{ maxWidth: '300px' }}/>
-            </header>
+
 
             <main className="container my-5">
         <div className="row justify-content-center"> 

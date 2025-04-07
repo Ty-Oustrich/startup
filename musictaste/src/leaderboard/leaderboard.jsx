@@ -17,12 +17,7 @@ export function Leaderboard(){
 
     return(
           <div className="bg-dark text-light">
-            <header className="bg-dark text-light py-4 text-center">
-              <h1 className="display-4">Music taste analyzer for Spotify</h1>
-              <img src="/musictaste.png" alt="musictaste.click logo" className="img-fluid rounded" style={{ maxWidth: '300px' }} />
-      
-              
-            </header>
+
             <main className="container my-5">
               <div className="row justify-content-center">
                 <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
