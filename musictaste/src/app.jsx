@@ -57,14 +57,17 @@ import { About } from './about/about';
             <Route path='*' element={<NotFound />} />
         </Routes>  
         
-        <footer className="bg-light text-black-50">
-          <div className="container-fluid">
-            <span className="text-reset">Ty Oustrich</span>
-            <a className="text-reset" href="https://github.com/Ty-Oustrich/startup">
-              Source
-            </a>
-          </div>
-        </footer>
+        <footer className="bg-light text-dark text-center py-3 fixed-bottom">
+      <h3 className="h5">Creator: Tyler Oustrich</h3>
+      <a
+        href="https://github.com/Ty-Oustrich?tab=repositories"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-success fw-bold"
+      >
+        Github
+      </a>
+    </footer>
       </div>
       </BrowserRouter>
 

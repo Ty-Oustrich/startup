@@ -23,17 +23,7 @@ export function About(){
         </div>
     </main>
 
-        <footer className="bg-light text-dark text-center py-3 fixed-bottom">
-      <h3 className="h5">Creator: Tyler Oustrich</h3>
-      <a
-        href="https://github.com/Ty-Oustrich?tab=repositories"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-success fw-bold"
-      >
-        Github
-      </a>
-    </footer>
+
     </div>
     );
 

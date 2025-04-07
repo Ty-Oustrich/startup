@@ -36,7 +36,7 @@ export function Login(){
 
       return(
         <div className="bg-dark text-light min-vh-100">
-          
+
             <main className="container my-5">
             <div className="row justify-content-center">
         <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
@@ -56,17 +56,9 @@ export function Login(){
         </div>
       </div>
             </main>
-            <footer className="bg-light text-dark text-center py-3 fixed-bottom">
-      <h3 className="h5">Creator: Tyler Oustrich</h3>
-      <a
-        href="https://github.com/Ty-Oustrich?tab=repositories"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-success fw-bold"
-      >
-        Github
-      </a>
-    </footer>
+
+            
+
             </div>
         );
 
