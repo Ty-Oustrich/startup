@@ -12,29 +12,63 @@ export function Login(){
     const [userName, setUserName] = useState('');
     const [token, setToken] = useState(null);
     const navigate = useNavigate();
+
+
     const handleSpotifyLogin = () => {
-        //is authUrl endpoint proper????????
         const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
         window.location = authUrl;
     }
+
+    const handleLogout = () => {
+      localStorage.removeItem('spotifyToken');
+      setToken(null);
+      setUserName('');
+  };
+
+    const generateRandomString = (length) => {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+          result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+  };
+
+
 
     /*checks the URL hash for a Spotify
      access token (after redirect), 
      extracts it, logs it, stores it in 
      localStorage, then clears the hash.*/ 
-    useEffect(() => {
-        const getTokenFromUrl = () => {
+     useEffect(() => {
+      const getTokenFromUrl = () => {
           const hash = window.location.hash;
           if (hash) {
-            const token = hash.split('&')[0].split('=')[1];
-            console.log('Access Token:', token);
-            localStorage.setItem('spotifyToken', token);
-            //clear the hash from URL
-            window.location.hash = '';
+              const params = new URLSearchParams(hash.substring(1));
+              const token = params.get('access_token');
+              const state = params.get('state');
+              const storedState = localStorage.getItem('spotifyState');
+
+              if (state !== storedState) {
+                  console.error('State mismatch. Possible CSRF attack.');
+                  return;
+              }
+
+              if (token) {
+                  console.log('Access Token:', token);
+                  setToken(token);
+                  localStorage.setItem('spotifyToken', token);
+                  window.location.hash = '';
+                  fetchUserProfile(token).then(() => {
+                      navigate('/analyze'); // Redirect to analyze page
+                  }).catch((error) => {
+                      console.error('Login failed:', error);
+                  });
+              }
           }
-        };
-        getTokenFromUrl();
-      }, []);
+      };
+      getTokenFromUrl();
+  }, [navigate]);
 
       return(
         <div className="bg-dark text-light min-vh-100">
@@ -42,12 +76,22 @@ export function Login(){
             <main className="container my-5">
             <div className="row justify-content-center">
         <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
-          <button
-            id="login-btn"
-            className="btn btn-success btn-lg mb-4"
-            onClick={handleSpotifyLogin}
-          >Login with Spotify
-          </button>
+        {!token ? (
+                            <button
+                                id="login-btn"
+                                className="btn btn-success btn-lg mb-4"
+                                onClick={handleSpotifyLogin}
+                            >
+                                Login with Spotify
+                            </button>
+                        ) : (
+                            <button
+                                className="btn btn-danger btn-lg mb-4"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
+                        )}
           {userName && <p className="lead">Welcome, {userName}!</p>}
           <h2 className="h3">Analyze your music taste</h2>
           <h2 className="h3">Compare with others</h2>
