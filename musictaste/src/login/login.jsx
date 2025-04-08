@@ -26,6 +26,7 @@ export function Login(){
       localStorage.removeItem('spotifyToken');
       setToken(null);
       setUserName('');
+      setError('null');
   };
 
     const generateRandomString = (length) => {
