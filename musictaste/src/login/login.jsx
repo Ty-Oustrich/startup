@@ -11,6 +11,7 @@ export function Login(){
     //login button click
     const [userName, setUserName] = useState('');
     const [token, setToken] = useState(null);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
 
