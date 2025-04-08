@@ -22,8 +22,8 @@ import { About } from './about/about';
             style={{ maxWidth: '300px' }}
           />
           
-            </header>
-         <nav className="navbar navbar-expand navbar-dark">
+        </header>
+        <nav className="navbar navbar-expand navbar-dark">
                  <ul className="navbar-nav mx-auto gap-3">
                  <li className="nav-item">
                        <NavLink to="/" className="nav-link fs-3 fw-bold text-light">

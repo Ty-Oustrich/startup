@@ -96,8 +96,14 @@ I have already started on React part 2 so things might look messy.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - All functionality is mocked out
+React useState and useEffect for...
+- routing
+- error handling on login
+- mocked out spotify api interactions and functions for handling that data
+- mocked out handling of leaderboard data
+- mocked out the functions for calculating scores based on the data received from spotify API
+- [x] **Hooks** - I use useEffect and UseState in all my files
 
 ## 🚀 Service deliverable
 

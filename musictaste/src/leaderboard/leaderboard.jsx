@@ -6,7 +6,9 @@ export function Leaderboard(){
     const [leaderboardData, setLeaderboardData] = useState(['Loading...']);
   // Placeholder for leaderboard data (from WebSocket/API)
   useEffect(() => {
-    // Replace with actual data fetching logic
+    // actual data fetching logic
+
+    //mocked out here
     // remove when done... setTimeout to simulate data loading
     setTimeout(() => {
       setLeaderboardData(['User1: 95%', 'User2: 90%', 'User3: 85%']); // Example data
