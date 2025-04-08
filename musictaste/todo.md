@@ -1,0 +1,2 @@
+logout button
+token expiration handling

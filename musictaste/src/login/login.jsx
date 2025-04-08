@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap styles
 import '../app.css'
 
 export function Login(){
     const clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
-    const redirectUri = 'https://startup.musictaste.click/explain-start.html';
+    //this url could be wrong
+    const redirectUri = 'https://startup.musictaste.click/analyze';
     const scopes = 'user-read-private user-read-email user-top-read'
     //login button click
     const [userName, setUserName] = useState('');
+    const [token, setToken] = useState(null);
+    const navigate = useNavigate();
     const handleSpotifyLogin = () => {
         //is authUrl endpoint proper????????
-        const authUrl = `http://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
+        const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes}`;
         window.location = authUrl;
     }
 
@@ -24,9 +28,8 @@ export function Login(){
           if (hash) {
             const token = hash.split('&')[0].split('=')[1];
             console.log('Access Token:', token);
-            // Store token (e.g., in localStorage or state) for later use
             localStorage.setItem('spotifyToken', token);
-            // Optionally clear the hash from URL
+            //clear the hash from URL
             window.location.hash = '';
           }
         };
