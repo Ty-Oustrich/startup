@@ -31,6 +31,18 @@ async function initializeSuperUser(){
 }
 initializeSuperUser();
 
+apiRouter.post('/auth/superuser-login', async (req, res) => {
+    if (req.body.email === superUser.email) {
+        //check if password is right
+      if (await bcrypt.compare(req.body.password, superUser.password)) {
+        superUser.token = uuid.v4();
+        setAuthCookie(res, superUser.token);
+        res.send({ email: superUser.email, isSuperUser: true });
+        return;
+      }
+    }
+    res.status(401).send({ msg: '*ERRRRR* WRONG!' });
+  });
 
 
 
