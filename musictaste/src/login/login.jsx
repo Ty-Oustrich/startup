@@ -76,7 +76,7 @@ export function Login(){
      extracts it, logs it, stores it in 
      localStorage, then clears the hash.*/ 
      useEffect(() => {
-      const getTokenFromUrl = () => {
+      const getTokenFromUrl =  () => {
           const hash = window.location.hash;
           if (hash) {
               const params = new URLSearchParams(hash.substring(1));
@@ -94,11 +94,23 @@ export function Login(){
                   setToken(token);
                   localStorage.setItem('spotifyToken', token);
                   window.location.hash = '';
-                  fetchUserProfile(token).then(() => {
-                      navigate('/analyze'); // Redirect to analyze page
-                  }).catch((error) => {
-                      console.error('Login failed:', error);
-                  });
+
+                  try {
+                    // Send token to the bakcend
+                    const response = await fetch('/api/auth/spotify-login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ spotifyToken: token }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to send the token to backend');
+                    }
+                    await fetchUserProfile(token);
+                        navigate('/analyze');
+                    } catch (error) {
+                        console.error('Login failed:', error);
+                    }
               }
           }
       };

@@ -3,6 +3,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
+const fetch = require('node-fetch');
 
 const authCookieName = 'token';
 
@@ -14,7 +15,11 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // let users = [];
-// let scores = [];
+// let scores = []; , scores need to be stored in the database eventually
+
+
+const spotifyUsers = {};
+let leaderboard = [];
 
 const superUsername = 'invincible';
 const superUserPassword = 'maulertwins';
