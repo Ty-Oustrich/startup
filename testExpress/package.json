@@ -1,5 +1,5 @@
 {
-  "name": "service",
+  "name": "testexpress",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,11 +9,9 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "description": "",
   "dependencies": {
-    "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
-    "express": "^5.1.0",
-    "uuid": "^11.1.0"
-  },
-  "description": ""
+    "express": "^5.1.0"
+  }
 }
