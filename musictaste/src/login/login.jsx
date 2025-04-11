@@ -76,7 +76,7 @@ export function Login(){
      extracts it, logs it, stores it in 
      localStorage, then clears the hash.*/ 
      useEffect(() => {
-      const getTokenFromUrl =  () => {
+      const getTokenFromUrl = async () => {
           const hash = window.location.hash;
           if (hash) {
               const params = new URLSearchParams(hash.substring(1));
@@ -88,7 +88,6 @@ export function Login(){
                   console.error('State mismatch. Possible CSRF attack.');
                   return;
               }
-
               if (token) {
                   console.log('Access Token:', token);
                   setToken(token);
