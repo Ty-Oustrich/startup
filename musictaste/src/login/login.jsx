@@ -181,6 +181,16 @@ export function Login(){
         )}
           {error && <p className="text-danger">{error}</p>}
           {userName && <p className="lead">Welcome, {userName}!</p>}
+          
+          {!isSuperUserLoggedIn ? (
+
+          ) :(
+
+          )
+          }
+
+
+
           <h2 className="h3">Analyze your music taste</h2>
           <h2 className="h3">Compare with others</h2>
           <p className="lead">
