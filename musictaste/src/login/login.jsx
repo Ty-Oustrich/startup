@@ -14,13 +14,17 @@ export function Login(){
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    const [superUserEmail, setSuperUserEmail] = useState('');
+    const [superUserPassword, setSuperUserPassword] = useState('');
+    const [isSuperUserLoggedIn, setIsSuperUserLoggedIn] = useState(false);
+    const [superUserError, setSuperUserError] = useState(null);
 
     const handleSpotifyLogin = () => {
       const state = generateRandomString(16);
       localStorage.setItem('spotifyState', state); // Stores state... verification
       const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&state=${state}`;
       window.location = authUrl;
-    }
+    };
 
     const handleLogout = () => {
       localStorage.removeItem('spotifyToken');
@@ -37,6 +41,9 @@ export function Login(){
       }
       return result;
   };
+
+
+
 
 
   useEffect(() => {
