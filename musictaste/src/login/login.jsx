@@ -78,6 +78,17 @@ export function Login(){
     }
 };
 
+
+    const handleSuperUserLogin = async (event) => {
+        event.preventDefault(); //prevent page reload
+        try{
+
+        } catch (error){
+            console.error('Superuser login error', error);
+            setSuperUserError('Login failed :( ... are you a true superuser?')
+        }
+    };
+
     /*checks the URL hash for a Spotify
      access token (after redirect), 
      extracts it, logs it, stores it in 
