@@ -182,12 +182,16 @@ export function Login(){
           {error && <p className="text-danger">{error}</p>}
           {userName && <p className="lead">Welcome, {userName}!</p>}
           
+          {/* superuser login ui*/}
           {!isSuperUserLoggedIn ? (
-
+            <form onSubmit={handleSuperUserLogin} className"mt-4">
+            
+            </form>
           ) :(
-
-          )
-          }
+            <button className="btn btn-danger mt-4" onClick={handleSuperUserLogout}>
+            Superuser Logout
+            </button>
+          )}
 
 
 
