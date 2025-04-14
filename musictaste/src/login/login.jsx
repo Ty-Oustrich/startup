@@ -82,11 +82,34 @@ export function Login(){
     const handleSuperUserLogin = async (event) => {
         event.preventDefault(); //prevent page reload
         try{
-
+            const response = await fetch('/api/auth/superuser-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: superUserEmail, password: superUserPassword }),
+            });
+            if (!response.ok) { //this is the backend response.
+                throw new Error('Superuser login did not work');
+            }
+            //good login, navigate
+            const data = await response.json();
+            if (data.isSuperUser) {
+            setIsSuperUserLoggedIn(true);
+            navigate('/egg');
+            }
+            else{
+                setSuperUserError('Invalid credentials...');
+            }
         } catch (error){
             console.error('Superuser login error', error);
             setSuperUserError('Login failed :( ... are you a true superuser?')
         }
+    };
+
+    const handleSuperUserLogout = () => {
+        setIsSuperUserLoggedIn(false);
+        setSuperUserEmail('');
+        setSuperUserPassword('');
+        setSuperUserError(null);
     };
 
     /*checks the URL hash for a Spotify
