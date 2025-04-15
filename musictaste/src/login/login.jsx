@@ -155,7 +155,7 @@ export function Login(){
           }
       };
       getTokenFromUrl();
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     if (token) {
