@@ -90,16 +90,23 @@ export function Analyze(){
                 <button id="analyze-btn" 
                 className="btn btn-info btn-lg mb-4"
                 onClick={analyzeClick}
-                >Analyze my music</button>
-                <h2 id="status" className="h3">Waiting for analysis...</h2>
-                <h2 className="h3">Your Score: <span id="score">---</span></h2> 
-                <p className="lead">Your music taste is: <span id="taste">basic/unique</span></p> 
+                >Analyze my music
+                </button>
+                {error && <p className="text-danger">{error}</p>}
+                
+                <h2 id="status" className="h3">
+                  {status}
+                </h2>
+
+                <h2 className="h3">
+                Your Score: <span id="score">{score}</span>
+                </h2>
+                <p className="lead">
+                Your music taste is: <span id="taste">{taste}</span>
+                </p> 
           </div>
         </div>
       </main>
-
-
-
     </div>
     );
 
