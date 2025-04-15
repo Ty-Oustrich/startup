@@ -24,6 +24,7 @@ export function Analyze(){
 
     const analyzeClick = async () => {
       console.log('analyzeClick triggered')
+      console.log('analyzeClick triggered, accessToken:', accessToken);
       setStatus('Analyzing...');
       setError(null);
 

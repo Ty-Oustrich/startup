@@ -6,7 +6,7 @@ import '../app.css'
 export function Login(){
     const clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
     //this url could be wrong
-    const redirectUri = 'https://startup.musictaste.click/analyze';
+    const redirectUri = 'https://startup.musictaste.click/callback';
     const scopes = 'user-read-private user-read-email user-top-read'
     //login button click
     const [userName, setUserName] = useState('');
@@ -118,46 +118,7 @@ export function Login(){
      access token (after redirect), 
      extracts it, logs it, stores it in 
      localStorage, then clears the hash.*/ 
-     useEffect(() => {
-      const getTokenFromUrl = async () => {
-        console.log('getTokenFromUrl useEffect triggered');
-          const hash = window.location.hash;
-          if (hash) {
-              const params = new URLSearchParams(hash.substring(1));
-              const token = params.get('access_token');
-              const state = params.get('state');
-              const storedState = localStorage.getItem('spotifyState');
-
-              if (state !== storedState) {
-                  console.error('State mismatch. Possible CSRF attack.');
-                  return;
-              }
-              if (token) {
-                  console.log('Access Token:', token);
-                  setToken(token);
-                  localStorage.setItem('spotifyToken', token);
-                  window.location.hash = '';
-
-                  try {
-                    // Send token to the bakcend
-                    const response = await fetch('/api/auth/spotify-login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ spotifyToken: token }),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to send the token to backend');
-                    }
-                    await fetchUserProfile(token);
-                    } catch (error) {
-                        console.error('Login failed:', error);
-                    }
-              }
-          }
-      };
-      getTokenFromUrl();
-  }, []);
+     
 
   useEffect(() => {
     if (token) {
