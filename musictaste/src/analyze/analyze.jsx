@@ -9,23 +9,63 @@ export function Analyze(){
     const [taste, setTaste] = useState('basic/unique');
     const [error, setError] = useState(null);
 
+
+    const accessToken = '...ACCESS_TOKEN...'; // Replace token
+
     const analyzeClick = async () => {
       setStatus('Analyzing...');
       setError(null);
+
+      try {
+          // Fetch Spotify data and chart data
+          const spotData = await fetchSpotData();
+          const chartData = await fetchChartData();
+
+          const calculatedScore = calcScore(spotData, chartData);
+          const tasteResult = determineTaste(calculatedScore);
+
+          // update states
+          setScore(calculatedScore.toFixed(2));
+          setTaste(tasteResult);
+          setStatus('Analysis complete!');
+      } catch (err) {
+          setError('Failed to analyze music. try again.');
+          setStatus('Error');
+          console.error(err);
+      }
+  };
     
 
-    try {
-        //fetch the data from spotify
-        //process it
-    } catch{
-      //catch errrors
-    }
-  };
 
-  async function fetchSpotData(){
-    //get data
-    return [];
-  }
+  async function fetchSpotData() {
+    try {
+        // Fetch user's top 50 tracks (short_term for recent listening)
+        const response = await fetch(
+            'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50',
+            {
+              //headers could be wrong
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch Spotify data');
+        }
+
+        const data = await response.json();
+        // Return array of track objects with relevant info
+        return data.items.map(track => ({
+            id: track.id,
+            name: track.name,
+            artists: track.artists.map(artist => artist.name),
+            popularity: track.popularity, // Spotify's popularity score (0-100)
+        }));
+    } catch (err) {
+        throw new Error('Error fetching Spotify data: ' + err.message);
+    }
+}
   
   async function fetchChartData(){
     //the data to compare users listneing to
