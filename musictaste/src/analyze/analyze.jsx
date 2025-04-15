@@ -19,7 +19,6 @@ export function Analyze(){
       try {
           // Fetch Spotify data and chart data
           const spotData = await fetchSpotData();
-          const chartData = await fetchChartData();
 
           const calculatedScore = calcScore(spotData, chartData);
           const tasteResult = determineTaste(calculatedScore);
@@ -53,9 +52,7 @@ export function Analyze(){
         if (!response.ok) {
             throw new Error('Failed to fetch Spotify data');
         }
-
         const data = await response.json();
-        // Return array of track objects with relevant info
         return data.items.map(track => ({
             id: track.id,
             name: track.name,
@@ -66,37 +63,40 @@ export function Analyze(){
         throw new Error('Error fetching Spotify data: ' + err.message);
     }
 }
-  
-  async function fetchChartData(){
-    //the data to compare users listneing to
-    return [];
-  }
+
 
   function calcScore(spotData, chartData){
-    //process score, return the score
-    return 0;
+    if (!spotData.length) return 0;
+
+    const avgPopularity = spotData.reduce((sum, track) => sum + track.popularity, 0) /
+    spotData.length;
+    return 100 - avgPopularity;
   }
   
   function determineTaste(calculatedScore) {
-    //basic/unique based on score
-    return 'basic/unique';
+        if (calculatedScore >= 90) return 'extremely unique';
+        if (calculatedScore >= 75) return 'very unique';
+        if (calculatedScore >= 50) return 'somewhat basic unique';
+        if (calculatedScore >= 25) return 'pretty basic basic';
+        return 'very basic';  
   }
 
 
     return(
-        <div className="bg-dark text-light min-vh-100">
-
-
-            <main className="container my-5">
+    <div className="bg-dark text-light min-vh-100">
+      <main className="container my-5">
         <div className="row justify-content-center"> 
-            <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
-                <button id="analyze-btn" className="btn btn-info btn-lg mb-4">Analyze my music</button>
+          <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+                <button id="analyze-btn" 
+                className="btn btn-info btn-lg mb-4"
+                onClick={analyzeClick}
+                >Analyze my music</button>
                 <h2 id="status" className="h3">Waiting for analysis...</h2>
                 <h2 className="h3">Your Score: <span id="score">---</span></h2> 
                 <p className="lead">Your music taste is: <span id="taste">basic/unique</span></p> 
-            </div>
-            </div>
-          </main>
+          </div>
+        </div>
+      </main>
 
 
 
