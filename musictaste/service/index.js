@@ -26,6 +26,32 @@ const superUserPassword = 'maulertwins';
 let superUser = null;
 
 
+
+apiRouter.post('/auth/spotify-login', (req, res) => {
+    const spotifyToken = req.body.spotifyToken;
+    if (spotifyToken) {
+    const sessionId = uuid.v4();
+        spotifyUsers[sessionId] = { spotifyToken: spotifyToken };
+        setAuthCookie(res, sessionId);
+        res.send({ message: 'Spotify login successful', isSuperUser: false });
+    } else {
+        res.status(401).send({ msg: 'Spotify login failed' });
+    }
+});
+
+
+
+//start of my logout endpoint
+apiRouter.delete('/auth/logout', async (req, res) => {
+    // ... my logout logic (clearing cookies, tokens, sessions)
+    res.clearCookie(authCookieName);
+    res.status(204).end();
+});
+
+
+
+
+
 async function initializeSuperUser(){
     const passwordHash = await bcrypt.hash(superUserPassword, 10);
     superUser = {
@@ -48,13 +74,6 @@ apiRouter.post('/auth/superuser-login', async (req, res) => {
     }
     res.status(401).send({ msg: '*ERRRRR* WRONG!' });
   });
-
-
-
-
-
-
-
 
 
 
