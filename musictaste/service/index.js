@@ -25,6 +25,15 @@ const superUsername = 'invincible';
 const superUserPassword = 'maulertwins';
 let superUser = null;
 
+function setAuthCookie(res, authToken) {
+    res.cookie(authCookieName, authToken, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+        path: '/', 
+    });
+}
+
 
 
 apiRouter.post('/auth/spotify-login', (req, res) => {
@@ -55,7 +64,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 async function initializeSuperUser(){
     const passwordHash = await bcrypt.hash(superUserPassword, 10);
     superUser = {
-        email: superUsername,
+        username: superUsername,
         password: passwordHash,
         token: null,
     };
@@ -63,12 +72,12 @@ async function initializeSuperUser(){
 initializeSuperUser();
 
 apiRouter.post('/auth/superuser-login', async (req, res) => {
-    if (req.body.email === superUser.email) {
+    if (req.body.username === superUser.username) {
         //check if password is right
       if (await bcrypt.compare(req.body.password, superUser.password)) {
         superUser.token = uuid.v4();
         setAuthCookie(res, superUser.token);
-        res.send({ email: superUser.email, isSuperUser: true });
+        res.send({ username: superUser.username, isSuperUser: true });
         return;
       }
     }
