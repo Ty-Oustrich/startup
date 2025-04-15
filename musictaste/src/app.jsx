@@ -27,7 +27,7 @@ function ProtectedRoute({ children }) {
             className="img-fluid rounded"
             style={{ maxWidth: '300px' }}
           />
-          
+
         </header>
         <nav className="navbar navbar-expand navbar-dark">
                  <ul className="navbar-nav mx-auto gap-3">
@@ -54,7 +54,7 @@ function ProtectedRoute({ children }) {
                  </ul>
                </nav>
         </header>
-  
+
         <Routes>
             <Route path='/' element={<Login />} exact />
             <Route path='/analyze' element={<Analyze />} />
@@ -63,8 +63,8 @@ function ProtectedRoute({ children }) {
             <Route path='*' element={<NotFound />} />
             <Route path="/egg" element={<EggPage />} />
             <Route path="/callback" element={<Callback />} />
-        </Routes>  
-        
+        </Routes>
+
         <footer className="bg-light text-dark text-center py-3 fixed-bottom">
       <h3 className="h5">Creator: Tyler Oustrich</h3>
       <a
@@ -79,7 +79,7 @@ function ProtectedRoute({ children }) {
       </div>
       </BrowserRouter>
 
-      
+
     );
     function NotFound() {
         return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
@@ -88,3 +88,4 @@ function ProtectedRoute({ children }) {
 
 
   export default App
+  

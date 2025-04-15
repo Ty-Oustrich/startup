@@ -91,9 +91,45 @@ apiRouter.post('/auth/superuser-login', async (req, res) => {
 
 
 
+  app.get('/callback', async (req, res) => {
+    const code = req.query.code || null;
+    if (!code) {
+        return res.status(400).send('No code returned from Spotify');
+    }
+    const basicAuth = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 
+    try {
+        const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Basic ${basicAuth}`,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                grant_type: 'authorization_code',
+                code: code,
+                redirect_uri: redirect_uri,
+            }),
+        });
 
+        const data = await response.json();
 
+        if (!data.access_token) {
+            console.error('Token response error:', data);
+            return res.status(400).send('Failed to get access token from Spotify');
+        }
+
+        const sessionId = uuid.v4();
+        spotifyUsers[sessionId] = { spotifyToken: data.access_token };
+
+        setAuthCookie(res, sessionId);
+        res.redirect('/');
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal error during Spotify authentication');
+    }
+});
 
 
 
