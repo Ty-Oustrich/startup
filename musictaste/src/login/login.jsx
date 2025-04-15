@@ -14,7 +14,7 @@ export function Login(){
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const [superUserEmail, setSuperUserEmail] = useState('');
+    const [superUsername, setSuperUsername] = useState('');
     const [superUserPassword, setSuperUserPassword] = useState('');
     const [isSuperUserLoggedIn, setIsSuperUserLoggedIn] = useState(false);
     const [superUserError, setSuperUserError] = useState(null);
@@ -85,7 +85,7 @@ export function Login(){
             const response = await fetch('/api/auth/superuser-login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: superUserEmail, password: superUserPassword }),
+                body: JSON.stringify({ username: superUsername, password: superUserPassword }),
             });
             if (!response.ok) { //this is the backend response.
                 throw new Error('Superuser login did not work');
@@ -107,7 +107,7 @@ export function Login(){
 
     const handleSuperUserLogout = () => {
         setIsSuperUserLoggedIn(false);
-        setSuperUserEmail('');
+        setSuperUsername('');
         setSuperUserPassword('');
         setSuperUserError(null);
     };
@@ -186,12 +186,12 @@ export function Login(){
           {!isSuperUserLoggedIn ? (
             <form onSubmit={handleSuperUserLogin} className="mt-4">
             <div className= "mb-3">
-                <label className="form-label">Email</label>
+                <label className="form-label">Username</label>
                 <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    value={superUserEmail}
-                    onChange={(e) => setSuperUserEmail(e.target.value)}
+                    value={superUsername}
+                    onChange={(e) => setSuperUsername(e.target.value)}
                 />
             </div>
             <div className="mb-3">
