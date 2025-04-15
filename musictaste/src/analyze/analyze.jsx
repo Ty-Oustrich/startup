@@ -8,9 +8,19 @@ export function Analyze(){
     const [score, setScore] = useState('---');
     const [taste, setTaste] = useState('basic/unique');
     const [error, setError] = useState(null);
+    const [accessToken, setAccessToken] = useState(null);
 
 
-    const accessToken = '...ACCESS_TOKEN...'; // Replace token
+    useEffect(() => {
+      const storedToken = localStorage.getItem('spotifyToken');
+      if (storedToken) {
+          setAccessToken(storedToken);
+      } else {
+          setError('Please log in to Spotify');
+          setStatus('Authentication required');
+      }
+  }, []);
+
 
     const analyzeClick = async () => {
       setStatus('Analyzing...');
