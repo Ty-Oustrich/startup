@@ -14,16 +14,6 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// let users = [];
-// let scores = []; , scores need to be stored in the database eventually
-
-
-const spotifyUsers = {};
-let leaderboard = [];
-
-const superUsername = 'invincible';
-const superUserPassword = 'maulertwins';
-let superUser = null;
 
 function setAuthCookie(res, authToken) {
     const maxAgeInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -36,6 +26,18 @@ function setAuthCookie(res, authToken) {
         maxAge: maxAgeInMilliseconds,
     });
 }
+
+// let users = [];
+// let scores = []; , scores need to be stored in the database eventually
+
+
+const spotifyUsers = {};
+let leaderboard = [];
+
+const superUsername = 'invincible';
+const superUserPassword = 'maulertwins';
+let superUser = null;
+
 
 
 
