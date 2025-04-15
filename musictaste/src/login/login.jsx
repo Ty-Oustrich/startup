@@ -7,7 +7,8 @@ export function Login(){
     const clientId = '640a1bf34e8349a2b748b0e6c68dbec5';
     //this url could be wrong
     const redirectUri = 'https://startup.musictaste.click/callback';
-    const scopes = 'user-read-private user-read-email user-top-read'
+    const scope = 'user-read-private user-read-email user-top-read'
+
     //login button click
     const [userName, setUserName] = useState('');
     const [token, setToken] = useState(null);
@@ -23,8 +24,11 @@ export function Login(){
         console.log('spot logging in')
       const state = generateRandomString(16);
       localStorage.setItem('spotifyState', state); // Stores state... verification
-      const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&state=${state}`;
-      window.location = authUrl;
+    //   const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&state=${state}`;
+    const authUrl =`https://accounts.spotify.com/authorize?` +
+  `client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
+ 
+    window.location = authUrl;
     };
 
     const handleLogout = () => {
