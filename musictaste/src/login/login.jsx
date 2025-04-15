@@ -30,7 +30,7 @@ export function Login(){
       localStorage.removeItem('spotifyToken');
       setToken(null);
       setUserName('');
-      setError('null');
+      setError(null);
   };
 
     const generateRandomString = (length) => {
@@ -163,83 +163,80 @@ export function Login(){
     }
 }, [token, navigate]);//runs everytime token changes..
 
-      return(
-        <div className="bg-dark text-light min-vh-100">
+return(
+    <div className="bg-dark text-light min-vh-100">
 
-            <main className="container my-5">
-            <div className="row justify-content-center">
-        <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
-        <h2 className="h3">Analyze your music taste</h2>
-          <h2 className="h3">Compare with others</h2>
-          <p className="lead">
-            An algorithm will determine how basic your music taste is based on the popularity of the songs you listen to.
-            To get started, click the button above to log in with your Spotify account.
-          </p>
-        {!token ? (
-            <button
-                id="login-btn"
-                className="btn btn-success btn-lg mb-4"
-                onClick={handleSpotifyLogin}
-            >
-                Login with Spotify
-            </button>
-        ) : (
-            <button
-                className="btn btn-danger btn-lg mb-4"
-                onClick={handleLogout}
-            >
-                Logout
-            </button>
-        )}
-          {error && <p className="text-danger">{error}</p>}
-          {userName && <p className="lead">Welcome, {userName}!</p>}
-          
-          <hr className="border-dark" />
+        <main className="container my-5">
+        <div className="row justify-content-center">
+    <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+    <h2 className="h3">Analyze your music taste</h2>
+      <h2 className="h3">Compare with others</h2>
+      <p className="lead">
+        An algorithm will determine how basic your music taste is based on the popularity of the songs you listen to.
+        To get started, click the button above to log in with your Spotify account.
+      </p>
+    {!token ? (
+        <button
+            id="login-btn"
+            className="btn btn-success btn-lg mb-4"
+            onClick={handleSpotifyLogin}
+        >
+            Login with Spotify
+        </button>
+    ) : (
+        <button
+            className="btn btn-danger btn-lg mb-4"
+            onClick={handleLogout}
+        >
+            Logout
+        </button>
+    )}
+      {error && <p className="text-danger">{error}</p>}
+      {userName && <p className="lead">Welcome, {userName}!</p>}
 
-          {/* superuser login ui*/}
-          {!isSuperUserLoggedIn ? (
-            <form onSubmit={handleSuperUserLogin} className="mt-4">
-            <div className= "mb-0">
-                <label className="form-label">Super Username</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={superUsername}
-                    onChange={(e) => setSuperUsername(e.target.value)}
-                />
-            </div>
-            <div className="mb-2">
-            <label className="form-label">Super Password</label>
+      <hr className="border-dark" />
+
+
+        <form onSubmit={handleSuperUserLogin} className="mt-4">
+        <div className= "mb-0">
+            <label className="form-label">Super Username</label>
             <input
-                type="password"
+                type="text"
                 className="form-control"
-                value={superUserPassword}
-                onChange={(e) => setSuperUserPassword(e.target.value)}
+                value={superUsername}
+                onChange={(e) => setSuperUsername(e.target.value)}
             />
         </div>
-        <button type="submit" className="btn btn-primary">Superuser Login</button>
-    
-            </form>
-          ) :(
-            <button className="btn btn-danger mt-4" onClick={handleSuperUserLogout}>
-            Superuser Logout
-            </button>
-          )}
+        <div className="mb-2">
+        <label className="form-label">Super Password</label>
+        <input
+            type="password"
+            className="form-control"
+            value={superUserPassword}
+            onChange={(e) => setSuperUserPassword(e.target.value)}
+        />
+    </div>
+    <button type="submit" className="btn btn-primary">Superuser Login</button>
 
-            {superUserError && <p className="text-danger mt-4">{superUserError}</p>}
+        </form>
+
+        {/* Superuser Logout Button (Conditional) */}
+        {isSuperUserLoggedIn && (
+          <button className="btn btn-danger mt-4" onClick={handleSuperUserLogout}>
+          Superuser Logout
+          </button>
+        )}
+
+        {superUserError && <p className="text-danger mt-4">{superUserError}</p>}
 
 
+
+
+    </div>
+  </div>
+        </main>
 
 
         </div>
-      </div>
-            </main>
-
-            
-
-            </div>
-        );
-
-
+    );
 }
-
