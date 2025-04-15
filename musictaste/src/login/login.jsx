@@ -184,7 +184,7 @@ export function Login(){
           
           {/* superuser login ui*/}
           {!isSuperUserLoggedIn ? (
-            <form onSubmit={handleSuperUserLogin} className"mt-4">
+            <form onSubmit={handleSuperUserLogin} className="mt-4">
             <div className= "mb-3">
                 <label className="form-label">Email</label>
                 <input
@@ -194,13 +194,25 @@ export function Login(){
                     onChange={(e) => setSuperUserEmail(e.target.value)}
                 />
             </div>
-            
+            <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input
+                type="password"
+                className="form-control"
+                value={superUserPassword}
+                onChange={(e) => setSuperUserPassword(e.target.value)}
+            />
+        </div>
+        <button type="submit" className="btn btn-primary">Superuser Login</button>
+    
             </form>
           ) :(
             <button className="btn btn-danger mt-4" onClick={handleSuperUserLogout}>
             Superuser Logout
             </button>
           )}
+
+{superUserError && <p className="text-danger mt-4">{superUserError}</p>}
 
 
 
