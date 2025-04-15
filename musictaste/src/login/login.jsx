@@ -118,6 +118,7 @@ export function Login(){
      localStorage, then clears the hash.*/ 
      useEffect(() => {
       const getTokenFromUrl = async () => {
+        console.log('getTokenFromUrl useEffect triggered');
           const hash = window.location.hash;
           if (hash) {
               const params = new URLSearchParams(hash.substring(1));
@@ -147,7 +148,6 @@ export function Login(){
                         throw new Error('Failed to send the token to backend');
                     }
                     await fetchUserProfile(token);
-                        navigate('/analyze');
                     } catch (error) {
                         console.error('Login failed:', error);
                     }
@@ -157,12 +157,24 @@ export function Login(){
       getTokenFromUrl();
   }, [navigate]);
 
+  useEffect(() => {
+    if (token) {
+        navigate('/analyze');
+    }
+}, [token, navigate]);//runs everytime token changes..
+
       return(
         <div className="bg-dark text-light min-vh-100">
 
             <main className="container my-5">
             <div className="row justify-content-center">
         <div className="col-md-8 bg-white text-dark rounded shadow p-4 text-center">
+        <h2 className="h3">Analyze your music taste</h2>
+          <h2 className="h3">Compare with others</h2>
+          <p className="lead">
+            An algorithm will determine how basic your music taste is based on the popularity of the songs you listen to.
+            To get started, click the button above to log in with your Spotify account.
+          </p>
         {!token ? (
             <button
                 id="login-btn"
@@ -182,11 +194,13 @@ export function Login(){
           {error && <p className="text-danger">{error}</p>}
           {userName && <p className="lead">Welcome, {userName}!</p>}
           
+          <hr className="border-dark" />
+
           {/* superuser login ui*/}
           {!isSuperUserLoggedIn ? (
             <form onSubmit={handleSuperUserLogin} className="mt-4">
-            <div className= "mb-3">
-                <label className="form-label">Username</label>
+            <div className= "mb-0">
+                <label className="form-label">Super Username</label>
                 <input
                     type="text"
                     className="form-control"
@@ -194,8 +208,8 @@ export function Login(){
                     onChange={(e) => setSuperUsername(e.target.value)}
                 />
             </div>
-            <div className="mb-3">
-            <label className="form-label">Password</label>
+            <div className="mb-2">
+            <label className="form-label">Super Password</label>
             <input
                 type="password"
                 className="form-control"
@@ -216,12 +230,7 @@ export function Login(){
 
 
 
-          <h2 className="h3">Analyze your music taste</h2>
-          <h2 className="h3">Compare with others</h2>
-          <p className="lead">
-            An algorithm will determine how basic your music taste is based on the popularity of the songs you listen to.
-            To get started, click the button above to log in with your Spotify account.
-          </p>
+
         </div>
       </div>
             </main>
@@ -230,8 +239,6 @@ export function Login(){
 
             </div>
         );
-
-
 
 
 }
