@@ -4,7 +4,7 @@ import '../app.css';
 
 //remove dash from name
 export function Analyze(){
-    const [status, setStatus] = useState('Waiting for analysis...');
+    const [status, setStatus] = useState('Waiting for analysis..');
     const [score, setScore] = useState('---');
     const [taste, setTaste] = useState('basic/unique');
     const [error, setError] = useState(null);
@@ -23,6 +23,7 @@ export function Analyze(){
 
 
     const analyzeClick = async () => {
+      console.log('analyzeClick triggered')
       setStatus('Analyzing...');
       setError(null);
 
@@ -39,7 +40,7 @@ export function Analyze(){
           setStatus('Analysis complete!');
       } catch (err) {
           setError('Failed to analyze music. try again.');
-          setStatus('Error');
+          setStatus('Error in analysis');
           console.error(err);
       }
   };

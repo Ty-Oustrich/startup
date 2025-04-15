@@ -20,6 +20,7 @@ export function Login(){
     const [superUserError, setSuperUserError] = useState(null);
 
     const handleSpotifyLogin = () => {
+        console.log('spot logging in')
       const state = generateRandomString(16);
       localStorage.setItem('spotifyState', state); // Stores state... verification
       const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&state=${state}`;
@@ -80,6 +81,7 @@ export function Login(){
 
 
     const handleSuperUserLogin = async (event) => {
+        console.log('super login function start')
         event.preventDefault(); //prevent page reload
         try{
             const response = await fetch('/api/auth/superuser-login', {
@@ -220,12 +222,11 @@ return(
 
         </form>
 
-        {/* Superuser Logout Button (Conditional) */}
-        {isSuperUserLoggedIn && (
+        
           <button className="btn btn-danger mt-4" onClick={handleSuperUserLogout}>
           Superuser Logout
           </button>
-        )}
+        
 
         {superUserError && <p className="text-danger mt-4">{superUserError}</p>}
 
