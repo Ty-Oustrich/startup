@@ -185,6 +185,15 @@ export function Login(){
           {/* superuser login ui*/}
           {!isSuperUserLoggedIn ? (
             <form onSubmit={handleSuperUserLogin} className"mt-4">
+            <div className= "mb-3">
+                <label className="form-label">Email</label>
+                <input
+                    type="email"
+                    className="form-control"
+                    value={superUserEmail}
+                    onChange={(e) => setSuperUserEmail(e.target.value)}
+                />
+            </div>
             
             </form>
           ) :(
