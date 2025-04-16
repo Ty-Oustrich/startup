@@ -6,6 +6,19 @@ const client = new MongoClient(url);
 const scoreCollection = client.db('startup').collection('scores');
 const userCollection = client.db('startup').collection('users');
 
+
+async function connectToDatabase() {
+    try {        await client.connect();
+      console.log('Connected to MongoDB');
+    } catch (error) {
+      console.error('Database connection failed:', error);
+     process.exit(1); // Exit cannot conect
+    }
+}
+
+//call when server starts
+connectToDatabase();
+
 // Store a user's score
 async function addScore(score, username) {
     try {
