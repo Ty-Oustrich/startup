@@ -273,13 +273,18 @@ apiRouter.get('/spotify/me', async (req, res) => {
 // Store a users score
 apiRouter.post('/leaderboard', async (req, res) => {
     const authToken = req.cookies[authCookieName];
-    if (!authToken || !spotifyUsers[authToken]) {
+    
+    // Check for either Spotify user or regular user
+    const spotifyUser = spotifyUsers[authToken];
+    const regularUser = findUser('token', authToken);
+    
+    if (!spotifyUser && !regularUser) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
 
     const { score, displayName } = req.body;
     if (!score || !displayName) {
-    return res.status(400).json({ error: 'Missing required fields' });
+        return res.status(400).json({ error: 'Missing required fields' });
     }
 
     // Add or update the users score
