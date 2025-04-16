@@ -170,7 +170,76 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+apiRouter.get('/spotify/me', async (req, res) => {
+    const authToken = req.cookies[authCookieName];
+  
+    if (authToken && spotifyUsers[authToken]) {
+      const sessionId = authToken;
+      const accessToken = spotifyUsers[sessionId]?.spotifyToken;
+  
+      try {
+        const response = await fetch('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        if (!response.ok) {
+          console.error('Failed to fetch user profile from Spotify API:', response.status);
+          return res.status(response.status).send('Failed to fetch Spotify profile');
+        }
+        const data = await response.json();
+        res.json({ 
+          displayName: data.display_name, 
+          id: data.id,
+          accessToken: accessToken // Include the access token in the response
+        });
+      } catch (error) {
+        console.error('Error fetching user profile from Spotify API:', error);
+        res.status(500).send('Error fetching Spotify profile');
+      }
+    } else {
+      res.status(401).send('Unauthorized');
+    }
+});
+
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
+
+async function fetchSpotData(accessToken) {
+    try {
+        const response = await fetch(
+            'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50',
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch Spotify data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data.items.map(track => ({
+            id: track.id,
+            name: track.name,
+            artists: track.artists.map(artist => artist.name),
+            popularity: track.popularity,
+        }));
+    } catch (err) {
+        console.error('Error in fetchSpotData:', err);
+        throw new Error('Error fetching Spotify data: ' + err.message);
+    }
+}
+
+function calcScore(spotData) {
+    if (!spotData || !spotData.length) {
+        throw new Error('No tracks found');
+    }
+
+    // Simply return the average popularity (0-100)
+    return spotData.reduce((sum, track) => sum + track.popularity, 0) / spotData.length;
+}

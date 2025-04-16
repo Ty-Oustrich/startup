@@ -10,41 +10,55 @@ export function Analyze(){
     const [error, setError] = useState(null);
     const [accessToken, setAccessToken] = useState(null);
 
-
     useEffect(() => {
-      const storedToken = localStorage.getItem('spotifyToken');
-      if (storedToken) {
-          setAccessToken(storedToken);
-      } else {
-          setError('Please log in to Spotify');
-          setStatus('Authentication required');
-      }
-  }, []);
-
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/spotify/me');
+                if (response.ok) {
+                    const data = await response.json();
+                    setAccessToken(data.accessToken);
+                    setStatus('Ready to analyze');
+                } else {
+                    setError('Please log in to Spotify');
+                    setStatus('Authentication required');
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                setError('Authentication error. Please try again.');
+                setStatus('Error');
+            }
+        }
+        checkAuth();
+    }, []);
 
     const analyzeClick = async () => {
-      console.log('analyzeClick triggered')
-      console.log('analyzeClick triggered, accessToken:', accessToken);
-      setStatus('Analyzing...');
-      setError(null);
+        console.log('analyzeClick triggered');
+        setStatus('Analyzing...');
+        setError(null);
 
-      try {
-          // Fetch Spotify data and chart data
-          const spotData = await fetchSpotData();
+        try {
+            // Fetch Spotify data
+            const spotData = await fetchSpotData();
+            console.log('Fetched Spotify data:', spotData);
 
-          const calculatedScore = calcScore(spotData, chartData);
-          const tasteResult = determineTaste(calculatedScore);
+            // Calculate score based on popularity
+            const calculatedScore = calcScore(spotData);
+            console.log('Calculated score:', calculatedScore);
 
-          // update states
-          setScore(calculatedScore.toFixed(2));
-          setTaste(tasteResult);
-          setStatus('Analysis complete!');
-      } catch (err) {
-          setError('Failed to analyze music. try again.');
-          setStatus('Error in analysis');
-          console.error(err);
-      }
-  };
+            // Determine taste based on score
+            const tasteResult = determineTaste(calculatedScore);
+            console.log('Determined taste:', tasteResult);
+
+            // Update states
+            setScore(calculatedScore.toFixed(2));
+            setTaste(tasteResult);
+            setStatus('Analysis complete!');
+        } catch (err) {
+            console.error('Analysis error:', err);
+            setError('Failed to analyze music. Please try again.');
+            setStatus('Error in analysis');
+        }
+    };
     
 
     //Frontend calls third party service endpoints
@@ -62,9 +76,10 @@ export function Analyze(){
         );
 
         if (!response.ok) {
-            throw new Error('Failed to fetch Spotify data');
+            throw new Error(`Failed to fetch Spotify data: ${response.status}`);
         }
         const data = await response.json();
+        console.log('Raw Spotify data:', data);
         return data.items.map(track => ({
             id: track.id,
             name: track.name,
@@ -72,25 +87,27 @@ export function Analyze(){
             popularity: track.popularity, // Spotify's popularity score (0-100)
         }));
     } catch (err) {
+        console.error('Error in fetchSpotData:', err);
         throw new Error('Error fetching Spotify data: ' + err.message);
     }
 }
 
 
-  function calcScore(spotData, chartData){
-    if (!spotData.length) return 0;
+  function calcScore(spotData) {
+    if (!spotData || !spotData.length) {
+        throw new Error('No tracks found');
+    }
 
-    const avgPopularity = spotData.reduce((sum, track) => sum + track.popularity, 0) /
-    spotData.length;
-    return 100 - avgPopularity;
+    // Simply return the average popularity (0-100)
+    return spotData.reduce((sum, track) => sum + track.popularity, 0) / spotData.length;
   }
   
   function determineTaste(calculatedScore) {
-        if (calculatedScore >= 90) return 'extremely unique';
-        if (calculatedScore >= 75) return 'very unique';
-        if (calculatedScore >= 50) return 'somewhat basic unique';
-        if (calculatedScore >= 25) return 'pretty basic basic';
-        return 'very basic';  
+    if (calculatedScore >= 90) return 'extremely popular';
+    if (calculatedScore >= 75) return 'very popular';
+    if (calculatedScore >= 50) return 'somewhat popular';
+    if (calculatedScore >= 25) return 'somewhat niche';
+    return 'very niche';
   }
 
 
@@ -102,6 +119,7 @@ export function Analyze(){
                 <button id="analyze-btn" 
                 className="btn btn-info btn-lg mb-4"
                 onClick={analyzeClick}
+                disabled={!accessToken}
                 >Analyze my music
                 </button>
                 {error && <p className="text-danger">{error}</p>}
