@@ -21,7 +21,7 @@ app.use(cookieParser());
 var apiRouter = express.Router();
 app.use('/api', apiRouter);
 
-// Static files
+// Frontend served up using Express static middleware
 app.use(express.static(path.join(__dirname, 'public')));
 
 function setAuthCookie(res, authToken) {
@@ -152,6 +152,16 @@ app.get('/callback', async (req, res) => {
     } else {
         console.error('No code received from Spotify');
         res.status(400).send('No authorization code received from Spotify');
+    }
+});
+
+// Check authentication status
+apiRouter.get('/auth/check-auth', (req, res) => {
+    const authToken = req.cookies[authCookieName];
+    if (authToken && spotifyUsers[authToken]) {
+        res.status(200).json({ authenticated: true });
+    } else {
+        res.status(401).json({ authenticated: false });
     }
 });
 

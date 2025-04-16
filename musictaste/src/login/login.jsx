@@ -21,6 +21,7 @@ export function Login(){
     const [superUserError, setSuperUserError] = useState(null);
 
     //spot auth flow
+    //frontend call third party service endpoint, goes through my backend first
     const handleSpotifyLogin = () => {
         console.log('Initiating Spotify login via backend');
         // Let the backend handle the entire flow

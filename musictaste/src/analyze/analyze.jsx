@@ -47,7 +47,7 @@ export function Analyze(){
   };
     
 
-
+    //Frontend calls third party service endpoints
   async function fetchSpotData() {
     try {
         // Fetch user's top 50 tracks (short_term for recent listening)
