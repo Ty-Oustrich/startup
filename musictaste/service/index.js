@@ -3,6 +3,8 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const crypto = require('crypto');
+const { MongoClient } = require('mongodb');
+const config = require('./dbConfig.json');
 
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
@@ -14,6 +16,11 @@ const client_secret = 'd3e9df933cb448a6a9e73c558e543eb5';
 const redirect_uri = 'https://startup.musictaste.click/callback';
 
 const { addScore, getHighScores, addUser, getUser } = require('./database');
+
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+const client = new MongoClient(url);
+const scoreCollection = client.db('startup').collection('scores');
+const userCollection = client.db('startup').collection('users');
 
 // Middleware
 app.use(express.json());
