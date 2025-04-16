@@ -202,7 +202,7 @@ apiRouter.get('/spotify/me', async (req, res) => {
     }
 });
 
-// Store a user's score
+// Store a users score
 apiRouter.post('/leaderboard', async (req, res) => {
     const authToken = req.cookies[authCookieName];
     if (!authToken || !spotifyUsers[authToken]) {
@@ -211,10 +211,10 @@ apiRouter.post('/leaderboard', async (req, res) => {
 
     const { score, displayName } = req.body;
     if (!score || !displayName) {
-        return res.status(400).json({ error: 'Missing required fields' });
+    return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Add or update the user's score
+    // Add or update the users score
     const existingIndex = leaderboard.findIndex(entry => entry.displayName === displayName);
     if (existingIndex >= 0) {
         leaderboard[existingIndex].score = score;
@@ -222,10 +222,10 @@ apiRouter.post('/leaderboard', async (req, res) => {
         leaderboard.push({ displayName, score });
     }
 
-    // Sort by score (descending)
+    // descending sort
     leaderboard.sort((a, b) => b.score - a.score);
 
-    // Keep only top 10 scores
+    // top 10 scores
     leaderboard = leaderboard.slice(0, 10);
 
     res.json({ success: true });

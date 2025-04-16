@@ -63,7 +63,7 @@ export function Analyze(){
                     },
                     body: JSON.stringify({
                         score: calculatedScore,
-                        displayName: 'Your Name' // You might want to get this from the Spotify profile
+                        displayName: 'Your Name'
                     }),
                 });
 
@@ -84,7 +84,7 @@ export function Analyze(){
     //Frontend calls third party service endpoints
   async function fetchSpotData() {
     try {
-        // Fetch user's top 50 tracks (short_term for recent listening)
+        // Fetch user's top 50 tracks (short_term)
         const response = await fetch(
             'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50',
             {
