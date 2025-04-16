@@ -13,6 +13,8 @@ const client_id = '640a1bf34e8349a2b748b0e6c68dbec5';
 const client_secret = 'd3e9df933cb448a6a9e73c558e543eb5';
 const redirect_uri = 'https://startup.musictaste.click/callback';
 
+const { addScore, getHighScores, addUser, getUser } = require('./database');
+
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -177,30 +179,32 @@ const verifyAuth = async (req, res, next) => {
 apiRouter.post('/auth/login', async (req, res) => {
     const { username, password } = req.body;
     
-        if (!username || !password) {
-         return res.status(400).json({ error: 'Username and password are required' });
-    }
-    let user = users.get(username);
-    
-    // If user doesn't existcreate new account
-    if (!user) {
-        user = {
-            username,
-            password,
-            token: null
-        };
-        users.set(username, user);
-    }
-    
-    // Check password
-    if (user.password !== password) {
-            return res.status(401).json({ error: 'Invalid password' });
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
     }
 
-    // Generate session token
-        user.token = uuid.v4();
-        setAuthCookie(res, user.token);
+    try {
+        let user = await getUser(username);
+        
+        // If user doesn't exist, create new account
+        if (!user) {
+            await addUser(username, password);
+            user = { username, password };
+        }
+        
+        // Check password
+        if (user.password !== password) {
+            return res.status(401).json({ error: 'Invalid password' });
+        }
+
+        // Generate session token
+        const token = uuid.v4();
+        setAuthCookie(res, token);
         res.json({ username: user.username });
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ error: 'Login failed' });
+    }
 });
 
 // Check authentication status
@@ -287,26 +291,24 @@ apiRouter.post('/leaderboard', async (req, res) => {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Add or update the users score
-    const existingIndex = leaderboard.findIndex(entry => entry.displayName === displayName);
-    if (existingIndex >= 0) {
-        leaderboard[existingIndex].score = score;
-    } else {
-        leaderboard.push({ displayName, score });
+    try {
+        await addScore(score, displayName);
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error storing score:', error);
+        res.status(500).json({ error: 'Failed to store score' });
     }
-
-    // descending sort
-    leaderboard.sort((a, b) => b.score - a.score);
-
-    // top 10 scores
-    leaderboard = leaderboard.slice(0, 10);
-
-    res.json({ success: true });
 });
 
 // Get the leaderboard
-apiRouter.get('/leaderboard', (req, res) => {
-    res.json(leaderboard);
+apiRouter.get('/leaderboard', async (req, res) => {
+    try {
+        const scores = await getHighScores();
+        res.json(scores);
+    } catch (error) {
+        console.error('Error getting leaderboard:', error);
+        res.status(500).json({ error: 'Failed to get leaderboard' });
+    }
 });
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
