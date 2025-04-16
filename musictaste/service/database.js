@@ -10,13 +10,13 @@ const userCollection = client.db('startup').collection('users');
 async function addScore(score, username) {
     try {
         const result = await scoreCollection.insertOne({
-            score: score,
-            username: username,
-            date: new Date()
+          score: score,
+          username: username,
+          date: new Date()
         });
         return result;
     } catch (error) {
-        console.error('Error adding score:', error);
+        console.error('Error adding the score:', error);
         throw error;
     }
 }
@@ -26,13 +26,13 @@ async function getHighScores() {
     try {
         const query = {};
         const options = {
-            sort: { score: -1 },
-            limit: 10
+          sort: { score: -1 },
+          limit: 10
         };
         const cursor = await scoreCollection.find(query, options);
         return cursor.toArray();
     } catch (error) {
-        console.error('Error getting high scores:', error);
+        console.error('Error getting the high scores:', error);
         throw error;
     }
 }
