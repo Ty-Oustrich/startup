@@ -1,25 +1,18 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
+const path = require('path');
+
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const fetch = require('node-fetch');
 const querystring = require('querystring');
-const path = require('path');
 
 const authCookieName = 'token';
 const client_id = '640a1bf34e8349a2b748b0e6c68dbec5';
 const client_secret = 'd3e9df933cb448a6a9e73c558e543eb5';
 const redirect_uri = 'https://startup.musictaste.click/analyze';
 
-// Configure express-session (if I choose to use it for state)
-// app.use(session({
-//   secret: 'YOUR_SESSION_SECRET',
-//   resave: false,
-//   saveUninitialized: true,
-// Adjust cookie settings??
-//   cookie: { secure: true, httpOnly: true, sameSite: 'strict' } 
-// }));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -204,12 +197,3 @@ app.use(express.static('public'));
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
-
-/*const port = process.argv.length > 2 ? process.argv[2] : 4000;
-app.use(express.static('public'));
-
-
-const express = require('express');
-const app = express();
-
-app.listen(8080);*/
