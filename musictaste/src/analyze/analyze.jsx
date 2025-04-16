@@ -53,6 +53,26 @@ export function Analyze(){
             setScore(calculatedScore.toFixed(2));
             setTaste(tasteResult);
             setStatus('Analysis complete!');
+
+            // Submit to leaderboard
+            try {
+                const response = await fetch('/api/leaderboard', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        score: calculatedScore,
+                        displayName: 'Your Name' // You might want to get this from the Spotify profile
+                    }),
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to submit to leaderboard');
+                }
+            } catch (err) {
+                console.error('Error submitting to leaderboard:', err);
+            }
         } catch (err) {
             console.error('Analysis error:', err);
             setError('Failed to analyze music. Please try again.');

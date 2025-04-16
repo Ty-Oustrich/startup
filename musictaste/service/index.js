@@ -202,6 +202,40 @@ apiRouter.get('/spotify/me', async (req, res) => {
     }
 });
 
+// Store a user's score
+apiRouter.post('/leaderboard', async (req, res) => {
+    const authToken = req.cookies[authCookieName];
+    if (!authToken || !spotifyUsers[authToken]) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { score, displayName } = req.body;
+    if (!score || !displayName) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Add or update the user's score
+    const existingIndex = leaderboard.findIndex(entry => entry.displayName === displayName);
+    if (existingIndex >= 0) {
+        leaderboard[existingIndex].score = score;
+    } else {
+        leaderboard.push({ displayName, score });
+    }
+
+    // Sort by score (descending)
+    leaderboard.sort((a, b) => b.score - a.score);
+
+    // Keep only top 10 scores
+    leaderboard = leaderboard.slice(0, 10);
+
+    res.json({ success: true });
+});
+
+// Get the leaderboard
+apiRouter.get('/leaderboard', (req, res) => {
+    res.json(leaderboard);
+});
+
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
