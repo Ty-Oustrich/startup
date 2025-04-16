@@ -191,12 +191,11 @@ apiRouter.post('/auth/login', async (req, res) => {
             await addUser(username, password);
             user = { username, password };
         }
-        
+    
         // Check password
         if (user.password !== password) {
             return res.status(401).json({ error: 'Invalid password' });
         }
-
         // Generate session token
         const token = uuid.v4();
         setAuthCookie(res, token);
@@ -211,14 +210,15 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.get('/auth/check-auth', (req, res) => {
     const authToken = req.cookies[authCookieName];
     
+    // Check for Spotify user
+    if (authToken && spotifyUsers[authToken]) {
+        return res.status(200).json({ authenticated: true });
+    }
+    
     // Check for regular user
     const user = findUser('token', authToken);
     if (user) {
         return res.status(200).json({ authenticated: true, username: user.username });
-    }
-    //check  for Spotify user
-    if (authToken && spotifyUsers[authToken]) {
-        return res.status(200).json({ authenticated: true });
     }
     
     res.status(401).json({ authenticated: false });
@@ -277,22 +277,30 @@ apiRouter.get('/spotify/me', async (req, res) => {
 // Store a users score
 apiRouter.post('/leaderboard', async (req, res) => {
     const authToken = req.cookies[authCookieName];
-    
-    // Check for either Spotify user or regular user
     const spotifyUser = spotifyUsers[authToken];
-    const regularUser = findUser('token', authToken);
     
-    if (!spotifyUser && !regularUser) {
-        return res.status(401).json({ error: 'Unauthorized' });
+    if (!spotifyUser) {
+        return res.status(401).json({ error: 'Unauthorized - Spotify login required' });
     }
 
-    const { score, displayName } = req.body;
-    if (!score || !displayName) {
-        return res.status(400).json({ error: 'Missing required fields' });
+    const { score } = req.body;
+    if (!score) {
+        return res.status(400).json({ error: 'Missing score' });
     }
 
     try {
-        await addScore(score, displayName);
+        // Get Spotify username from the user's profile
+        const spotifyResponse = await fetch('https://api.spotify.com/v1/me', {
+         headers: {
+            Authorization: `Bearer ${spotifyUser.spotifyToken}`,
+            },
+        });
+            if (!spotifyResponse.ok) {
+            throw new Error('Failed to fetch Spotify profile');
+    }        
+        const spotifyData = await spotifyResponse.json();
+        const spotifyUsername = spotifyData.display_name || spotifyData.id;
+        await addScore(score, spotifyUsername);
         res.json({ success: true });
     } catch (error) {
         console.error('Error storing score:', error);
@@ -307,7 +315,7 @@ apiRouter.get('/leaderboard', async (req, res) => {
         res.json(scores);
     } catch (error) {
         console.error('Error getting leaderboard:', error);
-        res.status(500).json({ error: 'Failed to get leaderboard' });
+        res.status(500).json({ error: 'Failed to get the leaderboard' });
     }
 });
 
