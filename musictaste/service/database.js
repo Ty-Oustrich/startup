@@ -1,14 +1,7 @@
 const { MongoClient } = require('mongodb');
+const config = require('./dbConfig.json');
 
-const userName = process.env.MONGOUSER;
-const password = process.env.MONGOPASSWORD;
-const hostname = process.env.MONGOHOSTNAME;
-
-if (!userName || !password || !hostname) {
-    throw Error('Database not configured. Set environment variables');
-}
-
-const url = `mongodb+srv://${userName}:${password}@${hostname}`;
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
 const scoreCollection = client.db('startup').collection('scores');
 const userCollection = client.db('startup').collection('users');
