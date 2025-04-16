@@ -13,15 +13,19 @@ const client_id = '640a1bf34e8349a2b748b0e6c68dbec5';
 const client_secret = 'd3e9df933cb448a6a9e73c558e543eb5';
 const redirect_uri = 'https://startup.musictaste.click/callback';
 
-
-
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('public'));
 
+// API routes
 var apiRouter = express.Router();
 app.use('/api', apiRouter);
 
+// Static files
+app.use(express.static(path.join(__dirname, 'public'), {
+    index: false,
+    extensions: ['html']
+}));
 
 function setAuthCookie(res, authToken) {
     const maxAgeInMilliseconds = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -127,10 +131,9 @@ app.get('/login', function (req, res) {
     const state = uuid.v4();
     const scope = 'user-read-private user-read-email user-top-read';
 
-    // Store the state in a cookie (for example)
     res.cookie('spotifyState', state, { maxAge: 3600000, httpOnly: true, secure: true, sameSite: 'strict' });
 
-    res.redirect('https://accounts.spotify.com/authorize?' + // Official Spotify authorization URL
+    res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
             client_id: client_id,
@@ -189,9 +192,10 @@ app.get('/callback', async (req, res) => {
     }
 });
 
+// Catch-all route for SPA
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-  });
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.listen(port, () => {

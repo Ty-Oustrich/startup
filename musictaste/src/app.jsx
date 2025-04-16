@@ -56,13 +56,13 @@ function ProtectedRoute({ children }) {
         </header>
 
         <Routes>
-            <Route path='/' element={<Login />} exact />
-            <Route path='/analyze' element={<Analyze />} />
+            <Route path='/' element={<Login />} />
+            <Route path='/analyze' element={<ProtectedRoute><Analyze /></ProtectedRoute>} />
             <Route path='/leaderboard' element={<Leaderboard />} />
             <Route path='/about' element={<About />} />
+            <Route path='/egg' element={<EggPage />} />
+            <Route path='/callback' element={<Callback />} />
             <Route path='*' element={<NotFound />} />
-            <Route path="/egg" element={<EggPage />} />
-            <Route path="/callback" element={<Callback />} />
         </Routes>
 
         <footer className="bg-light text-dark text-center py-3 fixed-bottom">
