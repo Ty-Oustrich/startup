@@ -33,8 +33,9 @@ function setAuthCookie(res, authToken) {
     res.cookie(authCookieName, authToken, {
         secure: true,
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: 'lax',
         path: '/',
+        domain: '.musictaste.click',
         maxAge: maxAgeInMilliseconds,
     });
 }
@@ -134,7 +135,7 @@ app.get('/login', function (req, res) {
     // Clear any existing state cookie first
     res.clearCookie('spotifyState', {
         path: '/',
-        domain: 'musictaste.click'
+        domain: '.musictaste.click'
     });
 
     // Set new state cookie
@@ -144,7 +145,7 @@ app.get('/login', function (req, res) {
         secure: true, 
         sameSite: 'lax',
         path: '/',
-        domain: 'musictaste.click'
+        domain: '.musictaste.click'
     });
 
     // Add show_dialog=true to force the consent screen
@@ -165,24 +166,30 @@ app.get('/callback', async (req, res) => {
     const state = req.query.state || null;
     const storedState = req.cookies ? req.cookies['spotifyState'] : null;
 
-    // Log state values for debugging
-    console.log('Received state:', state);
-    console.log('Stored state:', storedState);
-    console.log('All cookies:', req.cookies);
+    // Enhanced logging
+    console.log('Callback received:', {
+        hasCode: !!code,
+        receivedState: state,
+        storedState: storedState,
+        allCookies: req.cookies,
+        headers: req.headers
+    });
 
     if (state === null || state !== storedState) {
         console.error('State mismatch:', {
             received: state,
             stored: storedState,
-            allCookies: req.cookies
+            allCookies: req.cookies,
+            url: req.url
         });
-        return res.status(400).send('State mismatch');
+        return res.status(400).send('State mismatch. Please try logging in again.');
     }
 
     if (code) {
         const basicAuth = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 
         try {
+            console.log('Attempting token exchange with Spotify...');
             const response = await fetch('https://accounts.spotify.com/api/token', {
                 method: 'POST',
                 headers: {
@@ -201,7 +208,9 @@ app.get('/callback', async (req, res) => {
                 console.error('Spotify API error:', {
                     status: response.status,
                     statusText: response.statusText,
-                    error: errorData
+                    error: errorData,
+                    requestUrl: 'https://accounts.spotify.com/api/token',
+                    redirectUri: redirect_uri
                 });
                 return res.status(response.status).send(`Spotify API error: ${errorData.error_description || response.statusText}`);
             }
@@ -210,7 +219,8 @@ app.get('/callback', async (req, res) => {
             console.log('Token exchange successful:', {
                 hasAccessToken: !!data.access_token,
                 tokenType: data.token_type,
-                scope: data.scope
+                scope: data.scope,
+                expiresIn: data.expires_in
             });
 
             if (data.access_token) {
@@ -219,8 +229,9 @@ app.get('/callback', async (req, res) => {
                 setAuthCookie(res, sessionId);
                 res.clearCookie('spotifyState', {
                     path: '/',
-                    domain: 'musictaste.click'
+                    domain: '.musictaste.click'
                 });
+                console.log('Authentication complete, redirecting to /analyze');
                 res.redirect('/analyze');
             } else {
                 console.error('Token exchange error - no access token:', data);
@@ -231,12 +242,18 @@ app.get('/callback', async (req, res) => {
             console.error('Error during token exchange:', {
                 message: error.message,
                 stack: error.stack,
-                code: error.code
+                code: error.code,
+                url: req.url,
+                headers: req.headers
             });
             res.status(500).send('Internal error during Spotify authentication. Please try again.');
         }
     } else {
-        res.status(400).send('No code returned from Spotify');
+        console.error('No code received from Spotify:', {
+            query: req.query,
+            url: req.url
+        });
+        res.status(400).send('No authorization code received from Spotify');
     }
 });
 
