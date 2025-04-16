@@ -23,10 +23,8 @@ export function Login(){
     //spot auth flow
     const handleSpotifyLogin = () => {
         console.log('Initiating Spotify login via backend');
-        const state = generateRandomString(16);
-        localStorage.setItem('spotifyState', state); // Store state
-        //pass in state
-        window.location = `/login?state=${state}`;
+        // Let the backend handle the entire flow
+        window.location.href = '/login';
     };
 
     const handleLogout = () => {
