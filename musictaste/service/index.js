@@ -155,14 +155,82 @@ app.get('/callback', async (req, res) => {
     }
 });
 
+// User storage
+const users = new Map();
+
+// Helper function to find a user by a specific field
+function findUser(field, value) {
+    return Array.from(users.values()).find(user => user[field] === value);
+}
+
+// Middleware to verify that the user is authorized to call an endpoint
+const verifyAuth = async (req, res, next) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+    if (user) {
+        next();
+    } else {
+        res.status(401).send({ msg: 'Unauthorized' });
+    }
+};
+
+// User login/account creation endpoint
+apiRouter.post('/auth/login', async (req, res) => {
+    const { username, password } = req.body;
+    
+        if (!username || !password) {
+         return res.status(400).json({ error: 'Username and password are required' });
+    }
+    let user = users.get(username);
+    
+    // If user doesn't existcreate new account
+    if (!user) {
+        user = {
+            username,
+            password,
+            token: null
+        };
+        users.set(username, user);
+    }
+    
+    // Check password
+    if (user.password !== password) {
+            return res.status(401).json({ error: 'Invalid password' });
+    }
+
+    // Generate session token
+        user.token = uuid.v4();
+        setAuthCookie(res, user.token);
+        res.json({ username: user.username });
+});
+
 // Check authentication status
 apiRouter.get('/auth/check-auth', (req, res) => {
     const authToken = req.cookies[authCookieName];
-    if (authToken && spotifyUsers[authToken]) {
-        res.status(200).json({ authenticated: true });
-    } else {
-        res.status(401).json({ authenticated: false });
+    
+    // Check for regular user
+    const user = findUser('token', authToken);
+    if (user) {
+        return res.status(200).json({ authenticated: true, username: user.username });
     }
+    //check  for Spotify user
+    if (authToken && spotifyUsers[authToken]) {
+        return res.status(200).json({ authenticated: true });
+    }
+    
+    res.status(401).json({ authenticated: false });
+});
+
+// Logout endpoint
+apiRouter.delete('/auth/logout', (req, res) => {
+    const authToken = req.cookies[authCookieName];
+    const user = findUser('token', authToken);
+    
+    if (user) {
+        user.token = null;
+        }
+
+res.clearCookie(authCookieName);
+    res.status(204).end();
 });
 
 // Catch-all route for SPA

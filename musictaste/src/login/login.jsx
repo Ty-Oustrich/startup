@@ -99,6 +99,29 @@ export function Login(){
   };
 
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+              if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || 'Login failed');
+            }
+          const data = await response.json();
+            setUsername(data.username);
+            navigate('/egg');
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
     const handleSuperUserLogin = async (event) => {
         console.log('super login function start')
         event.preventDefault(); //prevent page reload
