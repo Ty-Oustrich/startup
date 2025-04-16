@@ -5,11 +5,11 @@ const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const fetch = require('node-fetch');
 const querystring = require('querystring');
-const session = require('express-session'); // If I plan to use sessions for state
+const path = require('path');
 
 const authCookieName = 'token';
-const client_id = 'YOUR_CLIENT_ID'; // Replace with your Spotify client ID
-const client_secret = 'YOUR_CLIENT_SECRET'; // Replace with your Spotify client secret
+const client_id = '640a1bf34e8349a2b748b0e6c68dbec5';
+const client_secret = 'd3e9df933cb448a6a9e73c558e543eb5';
 const redirect_uri = 'https://startup.musictaste.click/analyze';
 
 // Configure express-session (if I choose to use it for state)
@@ -17,7 +17,8 @@ const redirect_uri = 'https://startup.musictaste.click/analyze';
 //   secret: 'YOUR_SESSION_SECRET',
 //   resave: false,
 //   saveUninitialized: true,
-//   cookie: { secure: true, httpOnly: true, sameSite: 'strict' } // Adjust cookie settings??
+// Adjust cookie settings??
+//   cookie: { secure: true, httpOnly: true, sameSite: 'strict' } 
 // }));
 
 app.use(express.json());
@@ -194,6 +195,9 @@ app.get('/callback', async (req, res) => {
     }
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+  });
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.use(express.static('public'));
