@@ -11,7 +11,7 @@ async function addScore(score, username) {
     try {
         const result = await scoreCollection.insertOne({
           score: score,
-          username: username,
+          spotifyUsername: spotifyUsername,
           date: new Date()
         });
         return result;
@@ -37,29 +37,27 @@ async function getHighScores() {
     }
 }
 
-// Store user credentials
+// Store user creds
 async function addUser(username, password) {
     try {
-        const result = await userCollection.insertOne({
-            username: username,
-            password: password,
-            date: new Date()
-        });
+    const result = await userCollection.insertOne({
+      username: username,
+      password: password,
+      date: new Date()
+    });
         return result;
     } catch (error) {
-        console.error('Error adding user:', error);
+        console.error('Error adding a user:', error);
         throw error;
     }
 }
-
 // Get user by username
 async function getUser(username) {
-    try {
-        const query = { username: username };
-        const user = await userCollection.findOne(query);
-        return user;
+  try {
+    const query = { username: username };
+    const user = await userCollection.findOne(query);    return user;
     } catch (error) {
-        console.error('Error getting user:', error);
+      console.error('Error getting auser:', error);
         throw error;
     }
 }
