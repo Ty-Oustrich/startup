@@ -23,9 +23,9 @@ connectToDatabase();
 async function addScore(score, username) {
     try {
         const result = await scoreCollection.insertOne({
-          score: score,
-          spotifyUsername: spotifyUsername,
-          date: new Date()
+            score: score,
+            spotifyUsername: username,
+            date: new Date()
         });
         return result;
     } catch (error) {
@@ -53,14 +53,14 @@ async function getHighScores() {
 // Store user creds
 async function addUser(username, password) {
     try {
-    const result = await userCollection.insertOne({
-      username: username,
-      password: password,
-      date: new Date()
-    });
+        const result = await userCollection.insertOne({
+            username: username,
+            password: password,
+            date: new Date()
+        });
         return result;
     } catch (error) {
-        console.error('Error adding a user:', error);
+        console.error('Error adding user:', error);
         throw error;
     }
 }
