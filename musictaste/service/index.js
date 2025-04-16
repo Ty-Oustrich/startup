@@ -367,24 +367,3 @@ function calcScore(spotData) {
     // Simply return the average popularity (0-100)
     return spotData.reduce((sum, track) => sum + track.popularity, 0) / spotData.length;
 }
-
-async function addUser(username, password) {
-    try {
-        const result = await userCollection.insertOne({
-            username: username,
-            password: password,
-            date: new Date()
-        });
-        return result;
-    } catch (error) {
-        console.error('Error adding score:', error);
-        throw error;
-    }
-}
-
-module.exports = {
-    addScore,
-    getHighScores,
-    addUser,
-    getUser
-};
