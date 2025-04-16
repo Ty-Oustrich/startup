@@ -90,48 +90,78 @@ apiRouter.post('/auth/superuser-login', async (req, res) => {
   });
 
 
+  //code provided by spotify for login^
+  const querystring = require('querystring'); // Make sure to require this
 
-  app.get('/callback', async (req, res) => {
-    const code = req.query.code || null;
-    if (!code) {
-        return res.status(400).send('No code returned from Spotify');
-    }
-    const basicAuth = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
+app.get('/login', function(req, res) {
+  const state = uuid.v4(); // Use uuid for a more secure state
+  const scope = 'user-read-private user-read-email user-top-read'; // Add all necessary scopes
 
-    try {
-        const response = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Basic ${basicAuth}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                grant_type: 'authorization_code',
-                code: code,
-                redirect_uri: redirect_uri,
-            }),
-        });
-
-        const data = await response.json();
-
-        if (!data.access_token) {
-            console.error('Token response error:', data);
-            return res.status(400).send('Failed to get access token from Spotify');
-        }
-
-        const sessionId = uuid.v4();
-        spotifyUsers[sessionId] = { spotifyToken: data.access_token };
-
-        setAuthCookie(res, sessionId);
-        res.redirect('/');
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal error during Spotify authentication');
-    }
+  res.redirect('https://accounts.spotify.com/authorize?' + // Official Spotify authorization URL
+    querystring.stringify({
+      response_type: 'code', // Requesting an authorization code
+      client_id: client_id,
+      scope: scope,
+      redirect_uri: redirect_uri,
+      state: state // Important for security
+    }));
 });
 
 
+app.get('/callback', async (req, res) => {
+    const code = req.query.code || null;
+    const state = req.query.state || null;
+    let storedState = null; // Initialize storedState
+
+    // --- IMPLEMENT STATE RETRIEVAL HERE ---
+    // You need to retrieve the 'state' value you stored
+    // when the user was redirected to Spotify.
+    // This might involve reading from a session, cookie, or a temporary store.
+    // For example, if you used cookies:
+    // storedState = req.cookies['spotifyState'];
+    // --- END STATE RETRIEVAL ---
+
+    if (state === null || state !== storedState) {
+        return res.status(400).send('State mismatch');
+    }
+
+    if (code) {
+        const basicAuth = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
+
+        try {
+            const response = await fetch('https://accounts.spotify.com/api/token', { //official Spotify token endpoint
+                method: 'POST',
+                headers: {
+                    'Authorization': `Basic ${basicAuth}`,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    grant_type: 'authorization_code',
+                    code: code,
+                    redirect_uri: redirect_uri,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (data.access_token) {
+                const sessionId = uuid.v4();
+                spotifyUsers[sessionId] = { spotifyToken: data.access_token };
+                setAuthCookie(res, sessionId);
+                res.redirect('/analyze');
+            } else {
+                console.error('Token exchange error:', data);
+                return res.status(400).send('Failed to exchange code for token');
+            }
+
+        } catch (error) {
+            console.error('Error during token exchange:', error);
+            res.status(500).send('Internal error during Spotify authentication');
+        }
+    } else {
+        res.status(400).send('No code returned from Spotify');
+    }
+});
 
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;

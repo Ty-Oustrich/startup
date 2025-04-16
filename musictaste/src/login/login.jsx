@@ -19,12 +19,13 @@ export function Login(){
     const [isSuperUserLoggedIn, setIsSuperUserLoggedIn] = useState(false);
     const [superUserError, setSuperUserError] = useState(null);
 
+    //spot auth flow
     const handleSpotifyLogin = () => {
-        console.log('spot logging in')
-      const state = generateRandomString(16);
-      localStorage.setItem('spotifyState', state); // Stores state... verification
-      const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&state=${state}`;
-      window.location = authUrl;
+        console.log('Initiating Spotify login via backend');
+        const state = generateRandomString(16);
+        localStorage.setItem('spotifyState', state); // Store state
+        //pass in state
+        window.location = `/login?state=${state}`;
     };
 
     const handleLogout = () => {
