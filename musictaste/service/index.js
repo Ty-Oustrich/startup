@@ -11,7 +11,8 @@ const querystring = require('querystring');
 const authCookieName = 'token';
 const client_id = '640a1bf34e8349a2b748b0e6c68dbec5';
 const client_secret = 'd3e9df933cb448a6a9e73c558e543eb5';
-const redirect_uri = 'https://startup.musictaste.click/analyze';
+const redirect_uri = 'https://startup.musictaste.click/callback';
+
 
 
 app.use(express.json());
@@ -19,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 var apiRouter = express.Router();
-app.use(`/api`, apiRouter);
+app.use('/api', apiRouter);
 
 
 function setAuthCookie(res, authToken) {
@@ -193,7 +194,6 @@ app.get('*', (req, res) => {
   });
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-app.use(express.static('public'));
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
