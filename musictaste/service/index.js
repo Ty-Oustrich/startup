@@ -97,6 +97,36 @@ apiRouter.post('/auth/superuser-login', async (req, res) => {
     res.status(401).send({ msg: '*ERRRRR* WRONG!' });
 });
 
+
+apiRouter.get('/spotify/me', async (req, res) => {
+    const authToken = req.cookies[authCookieName];
+  
+    if (authToken && spotifyUsers[authToken]) {
+      const sessionId = authToken;
+      const accessToken = spotifyUsers[sessionId]?.spotifyToken;
+  
+      try {
+        const response = await fetch('https://api.spotify.com/v1/me', { // Spotify API endpoint
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+            if(!response.ok) {
+            console.error('Failed to fetch user profile from Spotify API:', response.status);
+          return res.status(response.status).send('Failed to fetch Spotify profile');
+        }
+        const data = await response.json();
+        res.json({ displayName: data.display_name, id: data.id });
+      } catch (error) {
+        console.error('Error fetching user profile from Spotify API:', error);
+        res.status(500).send('Error fetching Spotify profile');
+      }
+    } 
+    else {
+      res.status(401).send('Unauthorized');
+    }
+  });
+
 //spot Auth flow
 app.get('/login', function (req, res) {
     const state = uuid.v4();

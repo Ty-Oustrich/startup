@@ -50,36 +50,54 @@ export function Login(){
 
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('spotifyToken');
-    if (storedToken && !token) {
-        setToken(storedToken);
-        fetchUserProfile(storedToken).catch(() => {
-            localStorage.removeItem('spotifyToken');
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/check-auth');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.isAuthenticated) {
+            setToken(true); //bool of token state
+            if (data.userName) {
+              setUserName(data.userName);
+            } else {
+              fetchUserProfileFromBackend();
+            }
+          } 
+          else {
             setToken(null);
-            console.log('Token expired, please log in again.');
-        });
-    }
-  }, [token]);
+            setUserName('');
+          }
+        } else {
+          setToken(null);
+          setUserName('');
+          console.error('Failed to check authentication status');
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        setToken(null);
+        setUserName('');
+      }
+    };
+    checkAuth();
+  }, []);
 
 
-
-  const fetchUserProfile = async (accessToken) => {
+  const fetchUserProfileFromBackend = async () => {
     try {
-        const response = await fetch('https://api.spotify.com/v1/me', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        if (!response.ok) throw new Error('Failed to fetch profile');
+      const response = await fetch('/api/spotify/me');
+      if (response.ok) {
         const data = await response.json();
-        setUserName(data.display_name || data.id);
-        setError(null); // Clear error on success
+        setUserName(data.displayName || data.id);
+        setError(null);
+      } else {
+        console.error('Failed to fetch user profile from backend');
+        setError('Failed to load user info.');
+      }
     } catch (error) {
-        console.error('Error fetching profile:', error);
-        setError('Failed to log in. Please try again.');
-        throw error; // Rethrow
+      console.error('Error fetching user profile from backend:', error);
+      setError('Failed to load user info.');
     }
-};
+  };
 
 
     const handleSuperUserLogin = async (event) => {
