@@ -1,19 +1,24 @@
-require('dotenv').config();
-
-const client_id = process.env.SPOTIFY_CLIENT_ID;
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
-
-
-
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const fetch = require('node-fetch');
+const querystring = require('querystring');
+const session = require('express-session'); // If I plan to use sessions for state
 
 const authCookieName = 'token';
+const client_id = 'YOUR_CLIENT_ID'; // Replace with your Spotify client ID
+const client_secret = 'YOUR_CLIENT_SECRET'; // Replace with your Spotify client secret
+const redirect_uri = 'https://startup.musictaste.click/analyze';
+
+// Configure express-session (if I choose to use it for state)
+// app.use(session({
+//   secret: 'YOUR_SESSION_SECRET',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: true, httpOnly: true, sameSite: 'strict' } // Adjust cookie settings??
+// }));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -30,13 +35,13 @@ function setAuthCookie(res, authToken) {
         secure: true,
         httpOnly: true,
         sameSite: 'strict',
-        path: '/', 
+        path: '/',
         maxAge: maxAgeInMilliseconds,
     });
 }
 
 // let users = [];
-// let scores = []; , scores need to be stored in the database eventually
+// let scores = []; , scores will be stored in the database eventually
 
 
 const spotifyUsers = {};
@@ -47,12 +52,10 @@ const superUserPassword = 'maulertwins';
 let superUser = null;
 
 
-
-
 apiRouter.post('/auth/spotify-login', (req, res) => {
     const spotifyToken = req.body.spotifyToken;
     if (spotifyToken) {
-    const sessionId = uuid.v4();
+        const sessionId = uuid.v4();
         spotifyUsers[sessionId] = { spotifyToken: spotifyToken };
         setAuthCookie(res, sessionId);
         res.send({ message: 'Spotify login successful', isSuperUser: false });
@@ -60,7 +63,6 @@ apiRouter.post('/auth/spotify-login', (req, res) => {
         res.status(401).send({ msg: 'Spotify login failed' });
     }
 });
-
 
 
 //start of my logout endpoint
@@ -71,10 +73,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 });
 
 
-
-
-
-async function initializeSuperUser(){
+async function initializeSuperUser() {
     const passwordHash = await bcrypt.hash(superUserPassword, 10);
     superUser = {
         username: superUsername,
@@ -82,52 +81,45 @@ async function initializeSuperUser(){
         token: null,
     };
 }
+
 initializeSuperUser();
 
 apiRouter.post('/auth/superuser-login', async (req, res) => {
     if (req.body.username === superUser.username) {
         //check if password is right
-      if (await bcrypt.compare(req.body.password, superUser.password)) {
-        superUser.token = uuid.v4();
-        setAuthCookie(res, superUser.token);
-        res.send({ username: superUser.username, isSuperUser: true });
-        return;
-      }
+        if (await bcrypt.compare(req.body.password, superUser.password)) {
+            superUser.token = uuid.v4();
+            setAuthCookie(res, superUser.token);
+            res.send({ username: superUser.username, isSuperUser: true });
+            return;
+        }
     }
     res.status(401).send({ msg: '*ERRRRR* WRONG!' });
-  });
-
-
-  //code provided by spotify for login^
-  const querystring = require('querystring'); // Make sure to require this
-
-app.get('/login', function(req, res) {
-  const state = uuid.v4(); // Use uuid for a more secure state
-  const scope = 'user-read-private user-read-email user-top-read'; // Add all necessary scopes
-
-  res.redirect('https://accounts.spotify.com/authorize?' + // Official Spotify authorization URL
-    querystring.stringify({
-      response_type: 'code', // Requesting an authorization code
-      client_id: client_id,
-      scope: scope,
-      redirect_uri: redirect_uri,
-      state: state // Important for security
-    }));
 });
 
+//spot Auth flow
+app.get('/login', function (req, res) {
+    const state = uuid.v4();
+    const scope = 'user-read-private user-read-email user-top-read';
 
+    // Store the state in a cookie (for example)
+    res.cookie('spotifyState', state, { maxAge: 3600000, httpOnly: true, secure: true, sameSite: 'strict' });
+
+    res.redirect('https://accounts.spotify.com/authorize?' + // Official Spotify authorization URL
+        querystring.stringify({
+            response_type: 'code',
+            client_id: client_id,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            state: state
+        }));
+});
+
+//spot Auth flow
 app.get('/callback', async (req, res) => {
     const code = req.query.code || null;
     const state = req.query.state || null;
-    let storedState = null; // Initialize storedState
-
-    // --- IMPLEMENT STATE RETRIEVAL HERE ---
-    // You need to retrieve the 'state' value you stored
-    // when the user was redirected to Spotify.
-    // This might involve reading from a session, cookie, or a temporary store.
-    // For example, if you used cookies:
-    // storedState = req.cookies['spotifyState'];
-    // --- END STATE RETRIEVAL ---
+    const storedState = req.cookies ? req.cookies['spotifyState'] : null; // Retrieve state cookie
 
     if (state === null || state !== storedState) {
         return res.status(400).send('State mismatch');
@@ -156,6 +148,7 @@ app.get('/callback', async (req, res) => {
                 const sessionId = uuid.v4();
                 spotifyUsers[sessionId] = { spotifyToken: data.access_token };
                 setAuthCookie(res, sessionId);
+                res.clearCookie('spotifyState'); // Clear the state cookie
                 res.redirect('/analyze');
             } else {
                 console.error('Token exchange error:', data);
@@ -175,7 +168,7 @@ app.get('/callback', async (req, res) => {
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.use(express.static('public'));
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });
 
 /*const port = process.argv.length > 2 ? process.argv[2] : 4000;
