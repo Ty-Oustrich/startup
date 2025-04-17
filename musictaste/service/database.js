@@ -7,49 +7,49 @@ const encodedPassword = encodeURIComponent(config.password);
 const url = `mongodb+srv://${encodedUsername}:${encodedPassword}@${config.hostname}/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(url, {
-    serverSelectionTimeoutMS: 5000, //timeout after 5s instead of 30s
-    connectTimeoutMS: 10000, // Give up initial connection after 10s
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 10000,
 });
 
 let scoreCollection;
 let userCollection;
-let isConnected = false;
+
+// Connection state manager
+const connectionState = {
+    isConnected: false,
+    getConnectionStatus: () => connectionState.isConnected,
+    setConnectionStatus: (status) => {
+        console.log(`Database connection status changed to: ${status}`);
+        connectionState.isConnected = status;
+    }
+};
 
 async function connectToDatabase() {
     try {
         console.log('Attempting to connect to MongoDB...');
         await client.connect();
         console.log('Connected to MongoDB successfully');
-        isConnected = true;
-        await initializeCollections();
-    } catch (error) {
-        console.error('Database connection failed:', error);
-        isConnected = false;
-        throw error;
-    }
-}
-
-async function initializeCollections() {
-    try {
+        
         const db = client.db('startup');
         scoreCollection = db.collection('scores');
         userCollection = db.collection('users');
-        console.log('Collections initialized');
+        
+        // Verify collections exist
+        const collections = await db.listCollections().toArray();
+        console.log('Available collections:', collections.map(c => c.name));
+        
+        connectionState.setConnectionStatus(true);
+        console.log('Database connection established and collections initialized');
     } catch (error) {
-        console.error('Failed to initialize collections:', error);
-        isConnected = false;
+        console.error('Database connection failed:', error);
+        connectionState.setConnectionStatus(false);
         throw error;
     }
 }
 
-// Initialize the database connection
-connectToDatabase().catch(err => {
-    console.error('Failed to initialize database:', err);
-});
-
 // Store a user's score
 async function addScore(score, username) {
-    if (!isConnected) {
+    if (!connectionState.getConnectionStatus()) {
         throw new Error('Database not connected');
     }
     try {
@@ -68,10 +68,11 @@ async function addScore(score, username) {
 
 // Get top scores
 async function getHighScores() {
-    if (!isConnected) {
+    if (!connectionState.getConnectionStatus()) {
         throw new Error('Database not connected');
     }
     try {
+        console.log('Querying scores collection...');
         const query = {};
         const options = {
             sort: { score: -1 },
@@ -79,7 +80,7 @@ async function getHighScores() {
         };
         const cursor = await scoreCollection.find(query, options);
         const scores = await cursor.toArray();
-        console.log('Retrieved scores:', scores);
+        console.log(`Retrieved ${scores.length} scores from database`);
         return scores;
     } catch (error) {
         console.error('Error getting the high scores:', error);
@@ -89,7 +90,7 @@ async function getHighScores() {
 
 // Store user creds
 async function addUser(username, password) {
-    if (!isConnected) {
+    if (!connectionState.getConnectionStatus()) {
         throw new Error('Database not connected');
     }
     try {
@@ -106,7 +107,7 @@ async function addUser(username, password) {
 }
 // Get user by username
 async function getUser(username) {
-    if (!isConnected) {
+    if (!connectionState.getConnectionStatus()) {
         throw new Error('Database not connected');
     }
     try {
@@ -124,6 +125,6 @@ module.exports = {
     getHighScores, 
     addUser, 
     getUser,
-    isConnected,
+    connectionState,
     connectToDatabase
 };

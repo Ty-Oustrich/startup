@@ -15,7 +15,7 @@ const client_id = '640a1bf34e8349a2b748b0e6c68dbec5';
 const client_secret = 'd3e9df933cb448a6a9e73c558e543eb5';
 const redirect_uri = 'https://startup.musictaste.click/callback';
 
-const { addScore, getHighScores, addUser, getUser, isConnected, connectToDatabase } = require('./database');
+const { addScore, getHighScores, addUser, getUser, connectionState, connectToDatabase } = require('./database');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
@@ -324,15 +324,23 @@ app.get('/health', (req, res) => {
 apiRouter.get('/leaderboard', async (req, res) => {
     try {
         console.log('Fetching leaderboard...');
-        if (!isConnected) {
+        if (!connectionState.getConnectionStatus()) {
             console.error('Database not connected when fetching leaderboard');
             return res.status(503).json({ 
                 error: 'Service temporarily unavailable', 
                 details: 'Database connection not established' 
             });
         }
+        
+        console.log('Database is connected, fetching scores...');
         const scores = await getHighScores();
-        console.log('Leaderboard data:', scores);
+        console.log('Successfully retrieved scores:', scores);
+        
+        if (!scores || scores.length === 0) {
+            console.log('No scores found in database');
+            return res.json([]);
+        }
+        
         res.json(scores);
     } catch (error) {
         console.error('Error getting leaderboard:', error);
@@ -391,3 +399,9 @@ function calcScore(spotData) {
     // Simply return the average popularity (0-100)
     return spotData.reduce((sum, track) => sum + track.popularity, 0) / spotData.length;
 }
+
+// Initialize database connection
+connectToDatabase().catch(err => {
+    console.error('Failed to initialize database:', err);
+    process.exit(1); 
+});
