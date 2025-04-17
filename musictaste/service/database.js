@@ -119,4 +119,11 @@ async function getUser(username) {
     }
 }
 
-module.exports = { addScore, getHighScores, addUser, getUser };
+module.exports = { 
+    addScore, 
+    getHighScores, 
+    addUser, 
+    getUser,
+    isConnected,
+    connectToDatabase
+};
