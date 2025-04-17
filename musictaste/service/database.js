@@ -1,7 +1,6 @@
 const { MongoClient } = require('mongodb');
 const config = require('./mydbConfig.json');
 
-// Ensure proper URL encoding of credentials
 const encodedUsername = encodeURIComponent(config.userName);
 const encodedPassword = encodeURIComponent(config.password);
 const url = `mongodb+srv://${encodedUsername}:${encodedPassword}@${config.hostname}/?retryWrites=true&w=majority`;
@@ -14,7 +13,7 @@ const client = new MongoClient(url, {
 let scoreCollection;
 let userCollection;
 
-// Connection state manager
+// Connection state manager instead of a bool
 const connectionState = {
     isConnected: false,
     getConnectionStatus: () => connectionState.isConnected,
@@ -66,7 +65,7 @@ async function addScore(score, username) {
     }
 }
 
-// Get top scores
+//get leaderboard scores
 async function getHighScores() {
     if (!connectionState.getConnectionStatus()) {
         throw new Error('Database not connected');
@@ -88,7 +87,7 @@ async function getHighScores() {
     }
 }
 
-// Store user creds
+//store users credential
 async function addUser(username, password) {
     if (!connectionState.getConnectionStatus()) {
         throw new Error('Database not connected');
