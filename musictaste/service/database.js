@@ -4,43 +4,53 @@ const config = require('./dbConfig.json');
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
 
-
 let scoreCollection;
 let userCollection;
+let isConnected = false;
 
 async function connectToDatabase() {
     try {
         await client.connect();
         console.log('Connected to MongoDB');
+        isConnected = true;
+        await initializeCollections();
     } catch (error) {
         console.error('Database connection failed:', error);
-        // Don't exit the process, just log the error
+        isConnected = false;
+        throw error;
     }
 }
 
 async function initializeCollections() {
     try {
-          scoreCollection = client.db('startup').collection('scores');
-        userCollection = client.db('startup').collection('users');
+        const db = client.db('startup');
+        scoreCollection = db.collection('scores');
+        userCollection = db.collection('users');
         console.log('Collections initialized');
     } catch (error) {
-      console.error('Failed to initialize collections:', error);
+        console.error('Failed to initialize collections:', error);
+        isConnected = false;
+        throw error;
     }
 }
 
-connectToDatabase().then(initializeCollections);
+// Initialize the database connection
+connectToDatabase().catch(err => {
+    console.error('Failed to initialize database:', err);
+});
 
 // Store a user's score
 async function addScore(score, username) {
-    if (!scoreCollection) {
-        throw new Error('Database not initialized');
+    if (!isConnected) {
+        throw new Error('Database not connected');
     }
     try {
         const result = await scoreCollection.insertOne({
             score: score,
-            spotifyUsername: username,
+            username: username,
             date: new Date()
         });
+        console.log('Score added successfully:', result);
         return result;
     } catch (error) {
         console.error('Error adding the score:', error);
@@ -50,17 +60,19 @@ async function addScore(score, username) {
 
 // Get top scores
 async function getHighScores() {
-    if (!scoreCollection) {
-        throw new Error('Database not initialized');
+    if (!isConnected) {
+        throw new Error('Database not connected');
     }
     try {
         const query = {};
         const options = {
-              sort: { score: -1 },
+            sort: { score: -1 },
             limit: 10
         };
         const cursor = await scoreCollection.find(query, options);
-        return cursor.toArray();
+        const scores = await cursor.toArray();
+        console.log('Retrieved scores:', scores);
+        return scores;
     } catch (error) {
         console.error('Error getting the high scores:', error);
         throw error;
@@ -69,8 +81,8 @@ async function getHighScores() {
 
 // Store user creds
 async function addUser(username, password) {
-    if (!userCollection) {
-        throw new Error('Database not initialized');
+    if (!isConnected) {
+        throw new Error('Database not connected');
     }
     try {
         const result = await userCollection.insertOne({
@@ -86,8 +98,8 @@ async function addUser(username, password) {
 }
 // Get user by username
 async function getUser(username) {
-    if (!userCollection) {
-        throw new Error('Database not initialized');
+    if (!isConnected) {
+        throw new Error('Database not connected');
     }
     try {
         const query = { username: username };

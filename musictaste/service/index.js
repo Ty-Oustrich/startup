@@ -318,11 +318,17 @@ apiRouter.post('/leaderboard', async (req, res) => {
 // Get the leaderboard
 apiRouter.get('/leaderboard', async (req, res) => {
     try {
+        console.log('Fetching leaderboard...');
         const scores = await getHighScores();
+        console.log('Leaderboard data:', scores);
         res.json(scores);
     } catch (error) {
         console.error('Error getting leaderboard:', error);
-        res.status(500).json({ error: 'Failed to get the leaderboard' });
+        if (error.message === 'Database not connected') {
+            res.status(503).json({ error: 'Service temporarily unavailable - Database connection failed' });
+        } else {
+            res.status(500).json({ error: 'Failed to load leaderboard', details: error.message });
+        }
     }
 });
 
