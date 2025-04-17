@@ -14,4 +14,4 @@ npm-debug.log*
 .vscode
 dbConfig.json
 .env
-dbConfig.json
+mydbConfig.json

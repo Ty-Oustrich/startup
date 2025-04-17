@@ -1,8 +1,15 @@
 const { MongoClient } = require('mongodb');
-const config = require('./dbConfig.json');
+const config = require('./mydbConfig.json');
 
-const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
-const client = new MongoClient(url);
+// Ensure proper URL encoding of credentials
+const encodedUsername = encodeURIComponent(config.userName);
+const encodedPassword = encodeURIComponent(config.password);
+const url = `mongodb+srv://${encodedUsername}:${encodedPassword}@${config.hostname}/?retryWrites=true&w=majority`;
+
+const client = new MongoClient(url, {
+    serverSelectionTimeoutMS: 5000, //timeout after 5s instead of 30s
+    connectTimeoutMS: 10000, // Give up initial connection after 10s
+});
 
 let scoreCollection;
 let userCollection;
@@ -10,8 +17,9 @@ let isConnected = false;
 
 async function connectToDatabase() {
     try {
+        console.log('Attempting to connect to MongoDB...');
         await client.connect();
-        console.log('Connected to MongoDB');
+        console.log('Connected to MongoDB successfully');
         isConnected = true;
         await initializeCollections();
     } catch (error) {

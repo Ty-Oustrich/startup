@@ -315,19 +315,37 @@ apiRouter.post('/leaderboard', async (req, res) => {
     }
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
+
 // Get the leaderboard
 apiRouter.get('/leaderboard', async (req, res) => {
     try {
         console.log('Fetching leaderboard...');
+        if (!isConnected) {
+            console.error('Database not connected when fetching leaderboard');
+            return res.status(503).json({ 
+                error: 'Service temporarily unavailable', 
+                details: 'Database connection not established' 
+            });
+        }
         const scores = await getHighScores();
         console.log('Leaderboard data:', scores);
         res.json(scores);
     } catch (error) {
         console.error('Error getting leaderboard:', error);
         if (error.message === 'Database not connected') {
-            res.status(503).json({ error: 'Service temporarily unavailable - Database connection failed' });
+            res.status(503).json({ 
+                error: 'Service temporarily unavailable', 
+                details: 'Database connection failed' 
+            });
         } else {
-            res.status(500).json({ error: 'Failed to load leaderboard', details: error.message });
+            res.status(500).json({ 
+                error: 'Failed to load leaderboard', 
+                details: error.message 
+            });
         }
     }
 });
